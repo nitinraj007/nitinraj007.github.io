@@ -2,19 +2,19 @@
 <html lang="en">
 <!-- 
     =============================================================================
-    |  CYBER SECURITY PORTFOLIO V2.0                                            |
+    |  CYBER SECURITY PORTFOLIO V2.1                                            |
     =============================================================================
     
-    UPDATES IN V2.0:
-    - Added "Certifications" section (id="certifications")
-    - Enhanced "Cyber/Hacker" aesthetic (Scanlines, Grid, Neon)
-    - Improved typography and spacing
-    - Added "Download Resume" button in Hero
+    REVISION LOG (V2.1):
+    - Refined UI/UX with better spacing and typography hierarchy.
+    - Updated "Certifications" section with descriptions and new buttons.
+    - Removed dates from certifications.
+    - Professionalized content tone.
+    - Enhanced button styles with hover glow effects.
     
     CONTENT MANAGEMENT:
-    1. CERTIFICATES: Search for id="certifications" to edit titles, dates, or links.
-    2. CONTACT: Search for "wa.me" or "mailto:" to update contact info.
-    3. SKILLS: Update data-width attributes in the "Arsenal" section.
+    1. CERTIFICATES: Search for id="certifications".
+    2. CONTACT: Search for "wa.me" or "mailto:".
     
     =============================================================================
 -->
@@ -27,7 +27,7 @@
     
     <!-- Open Graph / Social Media Meta -->
     <meta property="og:title" content="Nitin Raj | Cyber Security Researcher">
-    <meta property="og:description" content="Finding vulnerabilities before attackers do. Portfolio of an aspiring Penetration Tester from Gaya, Bihar.">
+    <meta property="og:description" content="Building a secure future through offensive security knowledge. Portfolio of an aspiring Penetration Tester.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://nitinraj007.github.io/portfolio/og-image.jpg">
     
@@ -53,7 +53,7 @@
     <!-- Fonts: Inter, JetBrains Mono (Terminal Font), Playfair -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,9 +71,10 @@
             --text-muted: #94a3b8;
             
             /* Effects */
-            --glass: rgba(11, 15, 26, 0.6);
-            --glass-border: rgba(0, 255, 157, 0.1);
-            --glow: 0 0 10px rgba(0, 255, 157, 0.3);
+            --glass: rgba(11, 15, 26, 0.7);
+            --glass-border: rgba(0, 255, 157, 0.15);
+            --glow: 0 0 15px rgba(0, 255, 157, 0.2);
+            --glow-text: 0 0 5px rgba(0, 255, 157, 0.5);
             
             /* Fonts */
             --font-heading: 'Playfair Display', serif;
@@ -99,27 +100,23 @@
         }
 
         /* --- CYBER AESTHETIC BACKGROUNDS --- */
-        
-        /* 1. Grid Background */
         .cyber-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: 
                 linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-size: 50px 50px;
             pointer-events: none;
         }
 
-        /* 2. Scanline Overlay */
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
             background-size: 100% 4px;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.3;
         }
 
-        /* 3. Vignette */
         .vignette {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: radial-gradient(circle at center, transparent 0%, #000 90%);
@@ -129,12 +126,12 @@
         /* --- UTILITIES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .gold-text { color: var(--gold); }
-        .neon-text { color: var(--neon-green); text-shadow: 0 0 5px rgba(0,255,157,0.5); }
+        .neon-text { color: var(--neon-green); text-shadow: var(--glow-text); }
         .cyan-text { color: var(--neon-cyan); }
         .text-muted { color: var(--text-muted); }
         .mono { font-family: var(--font-mono); }
-        .section-padding { padding: 100px 0; }
-        .bg-darker { background-color: rgba(0,0,0,0.3); }
+        .section-padding { padding: 120px 0; }
+        .bg-darker { background-color: rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .text-center { text-align: center; }
         .mb-4 { margin-bottom: 1.5rem; }
         .mb-5 { margin-bottom: 3rem; }
@@ -145,13 +142,14 @@
         /* Buttons */
         .btn {
             padding: 12px 28px;
-            border-radius: 2px; /* Sharper edges for cyber look */
+            border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -160,15 +158,16 @@
             font-family: var(--font-mono);
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
-        /* Glitch hover effect for buttons */
-        .btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: 0.5s;
+        /* Hover Glow */
+        .btn::after {
+            content: ''; position: absolute; inset: 0; z-index: -1;
+            background: rgba(255,255,255,0.05); opacity: 0; transition: 0.3s;
         }
-        .btn:hover::before { left: 100%; }
+        .btn:hover::after { opacity: 1; }
+        .btn:active { transform: scale(0.98); }
 
         .btn-whatsapp {
             background: rgba(37, 211, 102, 0.1);
@@ -176,96 +175,100 @@
             border-color: #25D366;
             box-shadow: 0 0 10px rgba(37, 211, 102, 0.1);
         }
-        .btn-whatsapp:hover { background: #25D366; color: #000; box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
+        .btn-whatsapp:hover { background: #25D366; color: #000; box-shadow: 0 0 25px rgba(37, 211, 102, 0.5); }
 
         .btn-outline {
-            border-color: var(--neon-cyan);
-            color: var(--neon-cyan);
+            border-color: var(--glass-border);
+            color: var(--text-muted);
             background: transparent;
         }
         .btn-outline:hover {
-            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            background: rgba(0, 243, 255, 0.05);
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-            text-shadow: 0 0 5px var(--neon-cyan);
         }
         
         .btn-red {
             background: rgba(255, 0, 0, 0.1);
             color: #ff4d4d;
-            border-color: #ff4d4d;
+            border-color: rgba(255,0,0,0.3);
         }
-        .btn-red:hover { background: #ff0000; color: #000; box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+        .btn-red:hover { background: #ff0000; color: #fff; box-shadow: 0 0 20px rgba(255,0,0,0.5); }
 
         .btn-primary {
             background: rgba(0, 255, 157, 0.1);
             color: var(--neon-green);
             border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
         }
         .btn-primary:hover {
             background: var(--neon-green);
             color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+            box-shadow: 0 0 25px rgba(0, 255, 157, 0.4);
         }
+        
+        .btn-small { padding: 8px 16px; font-size: 0.75rem; border-radius: 4px; }
 
         /* Glass Card */
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
         }
         
         .glass-card:hover {
             border-color: var(--neon-green);
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.1);
+            box-shadow: 0 10px 30px -10px rgba(0, 255, 157, 0.15);
         }
         
-        /* Corner accents for cards */
-        .glass-card::after {
-            content: ''; position: absolute; top: 0; right: 0; width: 10px; height: 10px;
-            border-top: 2px solid var(--neon-green); border-right: 2px solid var(--neon-green);
-            opacity: 0; transition: 0.3s;
+        /* Cyber accents */
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            transform: translateX(-100%); transition: 0.5s;
         }
-        .glass-card:hover::after { opacity: 1; }
+        .glass-card:hover::before { transform: translateX(100%); }
 
         /* --- NAV --- */
         .glass-nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 7, 10, 0.9); backdrop-filter: blur(10px);
+            background: rgba(5, 7, 10, 0.85); backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--glass-border); padding: 20px 0;
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-mono); font-weight: 700; font-size: 1.5rem; letter-spacing: 1px; color: #fff; }
-        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; font-family: var(--font-mono); }
-        .nav-links a:hover { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-muted); font-size: 0.85rem; transition: 0.3s; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links a:hover { color: var(--neon-green); text-shadow: var(--glow-text); }
         .mobile-menu-btn { display: none; color: var(--neon-green); cursor: pointer; font-size: 1.5rem; }
 
         /* --- HERO --- */
-        #hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        #hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 60px; }
         #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; perspective: 1000px; }
+        .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; max-width: 900px; }
         
         .hero-title { 
             font-family: var(--font-heading); 
-            font-size: 4rem; 
-            line-height: 1.2; 
-            margin: 20px 0; 
+            font-size: clamp(2.5rem, 5vw, 4.5rem); 
+            line-height: 1.1; 
+            margin: 25px 0; 
             color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
         
         .typewriter-text { 
             font-family: var(--font-mono);
             color: var(--neon-green);
-            text-shadow: 0 0 10px rgba(0, 255, 157, 0.4);
+            text-shadow: var(--glow-text);
         }
-        .cursor { animation: blink 1s infinite; color: var(--neon-green); margin-left: 5px; }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; letter-spacing: 1px; }
+        .cursor { animation: blink 1s infinite; color: var(--neon-green); }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; letter-spacing: 0.5px; line-height: 1.6; }
         .divider { color: var(--neon-green); margin: 0 12px; }
         
         .hero-cta { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
@@ -273,106 +276,130 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* --- SECTIONS --- */
-        .section-header { margin-bottom: 60px; position: relative; }
-        .section-tag { font-family: var(--font-mono); color: var(--neon-green); display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 2px; text-shadow: 0 0 5px rgba(0,255,157,0.3); }
-        .section-header h2 { font-family: var(--font-heading); font-size: 2.8rem; color: #fff; }
-        .section-header::after {
-            content: ''; position: absolute; left: 0; bottom: -10px; width: 60px; height: 3px;
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
-            box-shadow: 0 0 10px var(--neon-green);
-        }
-
-        /* About & Timeline */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-        .lead-text { font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px; color: #d1d5db; }
+        .section-header { margin-bottom: 70px; position: relative; }
+        .section-tag { font-family: var(--font-mono); color: var(--neon-green); display: block; margin-bottom: 15px; font-size: 0.8rem; letter-spacing: 3px; text-shadow: var(--glow-text); text-transform: uppercase; }
+        .section-header h2 { font-family: var(--font-heading); font-size: 2.8rem; color: #fff; position: relative; display: inline-block; }
         
-        .timeline { position: relative; padding-left: 30px; border-left: 2px solid rgba(0, 255, 157, 0.2); margin-top: 20px; }
+        /* About & Timeline */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .lead-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #e2e8f0; }
+        
+        .timeline { position: relative; padding-left: 30px; border-left: 2px solid rgba(0, 255, 157, 0.1); margin-top: 20px; }
         .timeline-item { position: relative; margin-bottom: 40px; }
-        .timeline-dot { position: absolute; left: -36px; top: 5px; width: 10px; height: 10px; background: var(--bg-dark); border: 2px solid var(--neon-green); border-radius: 50%; box-shadow: 0 0 10px var(--neon-green); }
-        .timeline-date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold); margin-bottom: 5px; }
-        .timeline-content h4 { color: #fff; font-size: 1.1rem; }
+        .timeline-dot { position: absolute; left: -36px; top: 5px; width: 10px; height: 10px; background: var(--bg-dark); border: 2px solid var(--neon-green); border-radius: 50%; box-shadow: var(--glow-text); }
+        .timeline-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold); margin-bottom: 5px; display: block; }
+        .timeline-content h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         
         /* Skills */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .skill-card { display: flex; align-items: center; gap: 20px; }
-        .skill-icon { font-size: 1.8rem; color: var(--neon-cyan); min-width: 40px; text-align: center; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
+        .skill-icon { font-size: 1.8rem; color: var(--neon-cyan); min-width: 40px; text-align: center; }
         .skill-details { width: 100%; }
-        .skill-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .skill-details h4 { font-size: 0.95rem; color: #fff; font-family: var(--font-mono); }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .skill-details h4 { font-size: 0.9rem; color: #fff; font-family: var(--font-mono); }
         .skill-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-green); }
         .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
-        .progress { height: 100%; background: var(--neon-green); width: 0; box-shadow: 0 0 10px var(--neon-green); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .progress { height: 100%; background: var(--neon-green); width: 0; box-shadow: var(--glow-text); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
 
-        /* --- NEW: CERTIFICATIONS SECTION --- */
-        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        /* --- CERTIFICATIONS SECTION (ENHANCED) --- */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+        
         .cert-card { 
-            display: flex; flex-direction: column; gap: 15px; 
-            overflow: hidden; padding: 25px; 
-            border-left: 3px solid transparent;
+            display: flex; flex-direction: column; 
+            padding: 0; /* Reset padding to handle image area */
+            height: 100%;
         }
-        .cert-card:hover { border-left-color: var(--neon-green); }
         
-        .cert-img-wrapper {
-            width: 100%; height: 160px; background: rgba(0,0,0,0.3);
-            border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center;
-            border: 1px solid var(--glass-border); position: relative;
+        .cert-header {
+            padding: 25px 25px 15px 25px;
+            display: flex; gap: 20px; align-items: flex-start;
         }
-        .cert-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .cert-placeholder { font-size: 3rem; color: var(--text-muted); opacity: 0.5; }
-        .cert-card:hover .cert-img { transform: scale(1.05); }
+        
+        .cert-icon-box {
+            min-width: 60px; height: 60px; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--glass-border);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: var(--neon-green);
+        }
+        
+        .cert-icon-img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
 
-        .cert-info h3 { color: #fff; font-size: 1.2rem; margin-bottom: 5px; }
-        .cert-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); margin-bottom: 15px; }
-        .cert-badge { background: rgba(255, 215, 0, 0.1); color: var(--gold); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(255, 215, 0, 0.2); }
+        .cert-title-area h3 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; line-height: 1.4; }
+        .cert-badge { 
+            display: inline-block; font-size: 0.75rem; 
+            font-family: var(--font-mono); padding: 3px 8px; 
+            border-radius: 4px; background: rgba(0, 243, 255, 0.1); 
+            color: var(--neon-cyan); border: 1px solid rgba(0, 243, 255, 0.2); 
+        }
         
-        .cert-actions { display: flex; gap: 10px; margin-top: auto; }
-        .btn-small { padding: 8px 16px; font-size: 0.75rem; }
+        .cert-body {
+            padding: 0 25px 20px 25px;
+            flex-grow: 1;
+        }
+        
+        .cert-desc {
+            font-size: 0.9rem; color: var(--text-muted); 
+            line-height: 1.6; margin-bottom: 10px;
+        }
+        
+        .cert-desc ul { list-style: none; padding: 0; margin: 10px 0; }
+        .cert-desc li { position: relative; padding-left: 15px; margin-bottom: 5px; font-size: 0.85rem; }
+        .cert-desc li::before { 
+            content: '>'; position: absolute; left: 0; 
+            color: var(--neon-green); font-family: var(--font-mono); font-size: 0.8rem; 
+        }
+
+        .cert-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
 
         /* Projects */
-        .filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 20px; border-radius: 2px; cursor: pointer; transition: 0.3s; font-family: var(--font-mono); font-size: 0.85rem; }
-        .filter-btn:hover, .filter-btn.active { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 157, 0.2); }
+        .filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .filter-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 10px 24px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-family: var(--font-mono); font-size: 0.85rem; }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0, 255, 157, 0.05); box-shadow: var(--glow-text); }
 
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .project-card { cursor: pointer; position: relative; overflow: hidden; transition: 0.3s; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--neon-green), transparent); opacity: 0; transition: 0.3s; }
-        .project-card:hover::before { opacity: 1; }
-        .card-icon { font-size: 2rem; color: var(--neon-green); margin-bottom: 15px; }
-        .btn-text { background: none; border: none; color: var(--gold); cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono); }
+        .project-card { cursor: pointer; }
+        .card-icon { font-size: 2rem; color: var(--neon-green); margin-bottom: 20px; }
+        .btn-text { background: none; border: none; color: var(--gold); cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono); }
+        .btn-text:hover { gap: 10px; }
 
         /* YouTube */
         .yt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         .yt-card { border-left: 3px solid #ff0000; }
-        .yt-icon { font-size: 2.5rem; color: #FF0000; margin-bottom: 15px; text-shadow: 0 0 15px rgba(255,0,0,0.4); }
+        .yt-icon { font-size: 2.5rem; color: #FF0000; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,0,0,0.3)); }
 
         /* Footer */
-        footer { position: relative; background: #000; padding-top: 60px; padding-bottom: 30px; margin-top: 100px; border-top: 1px solid var(--glass-border); }
+        footer { position: relative; background: #000; padding-top: 80px; padding-bottom: 40px; margin-top: 100px; border-top: 1px solid var(--glass-border); }
         .footer-content { display: flex; flex-direction: column; align-items: center; }
-        .footer-top { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 30px; margin-bottom: 50px; }
         
         .thm-badge { 
             display: flex; align-items: center; gap: 15px; 
-            background: rgba(255,255,255,0.03); padding: 10px 20px; 
+            background: rgba(255,255,255,0.03); padding: 12px 25px; 
             border-radius: 50px; text-decoration: none; 
             border: 1px solid var(--glass-border); transition: 0.3s; 
         }
-        .thm-badge:hover { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 157, 0.2); transform: translateY(-2px); }
+        .thm-badge:hover { border-color: var(--neon-green); box-shadow: var(--glow); transform: translateY(-2px); }
         .thm-icon { font-size: 1.5rem; color: #fff; }
         .thm-text span:first-child { color: var(--neon-green); font-weight: 700; font-size: 0.9rem; }
         .thm-text span:last-child { color: var(--text-muted); font-size: 0.8rem; font-family: var(--font-mono); }
         
-        .social-links { display: flex; gap: 25px; margin-bottom: 30px; }
+        .social-links { display: flex; gap: 30px; margin-bottom: 30px; }
         .social-links a { color: var(--text-muted); font-size: 1.5rem; transition: 0.3s; }
-        .social-links a:hover { color: var(--neon-green); transform: translateY(-3px); text-shadow: 0 0 10px var(--neon-green); }
+        .social-links a:hover { color: var(--neon-green); transform: translateY(-3px); filter: drop-shadow(0 0 5px var(--neon-green)); }
 
         /* Modals */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; }
-        .modal { background: var(--bg-panel); border: 1px solid var(--neon-green); width: 90%; max-width: 500px; padding: 30px; opacity: 0; transform: scale(0.9); transition: 0.3s; border-radius: 4px; box-shadow: 0 0 50px rgba(0, 255, 157, 0.15); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
+        .modal { background: var(--bg-panel); border: 1px solid var(--neon-green); width: 90%; max-width: 500px; padding: 30px; opacity: 0; transform: scale(0.95); transition: 0.3s; border-radius: 8px; box-shadow: 0 0 50px rgba(0, 255, 157, 0.1); }
         .modal.active, .modal-overlay.active { opacity: 1; pointer-events: all; }
         .modal.active { transform: scale(1); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .close-modal { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; transition: 0.2s; }
-        .close-modal:hover { color: var(--neon-green); }
+        .close-modal:hover { color: var(--neon-green); transform: rotate(90deg); }
 
         /* Loader */
         #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; flex-direction: column; gap: 20px; }
@@ -387,9 +414,9 @@
         .reveal-left.active { opacity: 1; transform: translateX(0); }
         .reveal-right.active { opacity: 1; transform: translateX(0); }
         
-        .reveal-up { transform: translateY(30px); }
-        .reveal-left { transform: translateX(-30px); }
-        .reveal-right { transform: translateX(30px); }
+        .reveal-up { transform: translateY(40px); }
+        .reveal-left { transform: translateX(-40px); }
+        .reveal-right { transform: translateX(40px); }
         
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
@@ -405,8 +432,9 @@
             .mobile-menu-btn { display: block; }
             .hero-content { padding-top: 60px; }
             .hero-cta { flex-direction: column; width: 100%; }
-            .btn-whatsapp { width: 100%; justify-content: center; }
+            .btn { width: 100%; }
             .footer-top { flex-direction: column; text-align: center; }
+            .cert-footer { flex-direction: column; }
         }
     </style>
 </head>
@@ -419,7 +447,7 @@
 
     <!-- Loading Overlay -->
     <div id="loader">
-        <span class="mono neon-text" style="font-size: 0.9rem; letter-spacing: 2px;">INITIALIZING SYSTEM...</span>
+        <span class="mono neon-text" style="font-size: 0.8rem; letter-spacing: 2px;">INITIALIZING SYSTEM...</span>
         <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
 
@@ -434,7 +462,7 @@
                 <a href="#hero">Home</a>
                 <a href="#about">Identity</a>
                 <a href="#skills">Arsenal</a>
-                <a href="#certifications">Certs</a> <!-- Added Link -->
+                <a href="#certifications">Certs</a>
                 <a href="#projects">Operations</a>
                 <a href="#youtube">Media</a>
                 <a href="#contact">Signal</a>
@@ -448,8 +476,8 @@
         
         <div class="container hero-content" data-parallax>
             <div class="hero-text-wrapper">
-                <p class="mono neon-text fade-in-up delay-1">
-                    <i class="fas fa-terminal"></i> System Online // Root Access Granted
+                <p class="mono neon-text fade-in-up delay-1" style="font-size: 0.9rem;">
+                    <i class="fas fa-terminal"></i> System Online // Access Granted
                 </p>
                 
                 <h1 class="hero-title fade-in-up delay-2">
@@ -457,7 +485,8 @@
                 </h1>
                 
                 <p class="hero-subtitle fade-in-up delay-3">
-                    Finding vulnerabilities before attackers do. <span class="divider">/</span> From Gaya, Bihar
+                    Securing the digital infrastructure through offensive security knowledge. <br class="mobile-hide">
+                    From <span class="white-text">Gaya, Bihar</span> to the global network.
                 </p>
                 
                 <div class="hero-cta fade-in-up delay-4">
@@ -467,8 +496,8 @@
                     <a href="#projects" class="btn btn-outline">
                         View Operations
                     </a>
-                    <!-- New Resume Button -->
-                    <a href="#" onclick="alert('Resume download coming soon!')" class="btn btn-primary">
+                    <!-- Resume Button (Placeholder for now) -->
+                    <a href="#" onclick="alert('Resume file currently unavailable. Please contact via WhatsApp.')" class="btn btn-primary">
                         <i class="fas fa-file-download"></i> Download Resume
                     </a>
                 </div>
@@ -486,31 +515,31 @@
             <div class="about-grid">
                 <div class="glass-card reveal-left">
                     <p class="lead-text">
-                        I am a 19-year-old Cyber Security student at <strong class="gold-text">Galgotias University</strong>.
+                        I am a dedicated Cyber Security student at <strong class="gold-text">Galgotias University</strong>.
                     </p>
                     <p class="text-muted">
-                        My journey began in <strong class="neon-text">Gaya, Bihar</strong>, where I developed a fascination for the hidden layers of the internet. Today, I am an aspiring Penetration Tester, spending my nights on TryHackMe and my days analyzing network packets. My goal is simple: secure the digital infrastructure by thinking like the adversary.
+                        My journey began in <strong class="neon-text">Gaya, Bihar</strong>, sparked by a curiosity for how systems break. Today, I am an aspiring Penetration Tester, spending my time actively learning on TryHackMe, analyzing network traffic, and understanding the core of defensive security. My goal is simple: secure the digital infrastructure by thinking like the adversary.
                     </p>
                 </div>
                 
                 <!-- Timeline -->
                 <div class="timeline-wrapper reveal-right">
-                    <h3 class="gold-text mb-4">My Timeline</h3>
+                    <h3 class="gold-text mb-4" style="font-family: var(--font-heading);">Timeline</h3>
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-date">Present</div>
+                            <span class="timeline-date">Present</span>
                             <div class="timeline-content">
                                 <h4>Galgotias University</h4>
-                                <p>BCA (Cyber Security). Actively learning penetration testing, Linux, scripting, and networks.</p>
+                                <p class="text-muted">BCA (Cyber Security). Focused on penetration testing, Linux administration, and network protocols.</p>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-date">Past</div>
+                            <span class="timeline-date">Past</span>
                             <div class="timeline-content">
-                                <h4>Completed Class 12th</h4>
-                                <p>From Gaya, Bihar. Background in Science & Mathematics.</p>
+                                <h4>Higher Secondary</h4>
+                                <p class="text-muted">Completed Class 12th with a focus on Science & Mathematics.</p>
                             </div>
                         </div>
                     </div>
@@ -528,7 +557,7 @@
             </div>
 
             <div class="skills-grid">
-                <!-- Skill 1: C -->
+                <!-- Skill 1 -->
                 <div class="skill-card glass-card reveal-up">
                     <div class="skill-icon"><i class="fas fa-c"></i></div>
                     <div class="skill-details">
@@ -539,7 +568,7 @@
                         <div class="progress-bar"><div class="progress" data-width="40%"></div></div>
                     </div>
                 </div>
-                <!-- Skill 2: Python -->
+                <!-- Skill 2 -->
                 <div class="skill-card glass-card reveal-up" style="transition-delay: 100ms;">
                     <div class="skill-icon"><i class="fab fa-python"></i></div>
                     <div class="skill-details">
@@ -550,7 +579,7 @@
                         <div class="progress-bar"><div class="progress" data-width="45%"></div></div>
                     </div>
                 </div>
-                <!-- Skill 3: Bash -->
+                <!-- Skill 3 -->
                 <div class="skill-card glass-card reveal-up" style="transition-delay: 200ms;">
                     <div class="skill-icon"><i class="fas fa-terminal"></i></div>
                     <div class="skill-details">
@@ -561,7 +590,7 @@
                         <div class="progress-bar"><div class="progress" data-width="35%"></div></div>
                     </div>
                 </div>
-                <!-- Skill 4: HTML/CSS -->
+                <!-- Skill 4 -->
                 <div class="skill-card glass-card reveal-up" style="transition-delay: 300ms;">
                     <div class="skill-icon"><i class="fab fa-html5"></i></div>
                     <div class="skill-details">
@@ -572,7 +601,7 @@
                         <div class="progress-bar"><div class="progress" data-width="60%"></div></div>
                     </div>
                 </div>
-                <!-- Skill 5: JS -->
+                <!-- Skill 5 -->
                 <div class="skill-card glass-card reveal-up" style="transition-delay: 400ms;">
                     <div class="skill-icon"><i class="fab fa-js"></i></div>
                     <div class="skill-details">
@@ -583,7 +612,7 @@
                         <div class="progress-bar"><div class="progress" data-width="30%"></div></div>
                     </div>
                 </div>
-                <!-- Skill 6: Linux -->
+                <!-- Skill 6 -->
                 <div class="skill-card glass-card reveal-up" style="transition-delay: 500ms;">
                     <div class="skill-icon"><i class="fab fa-linux"></i></div>
                     <div class="skill-details">
@@ -598,7 +627,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: CERTIFICATIONS & LEARNING PATHS -->
+    <!-- CERTIFICATIONS SECTION (UPDATED) -->
     <section id="certifications" class="section-padding">
         <div class="container">
             <div class="section-header reveal-text">
@@ -608,66 +637,94 @@
             
             <div class="cert-grid">
                 
-                <!-- Certificate 1: C Programming (Scaler) -->
+                <!-- Certificate 1: Cyber Security 101 -->
                 <div class="glass-card cert-card reveal-up">
-                    <div class="cert-img-wrapper">
-                        <!-- Using uploaded image file -->
-                        <img src="clanguage.png" alt="C Programming" class="cert-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                        <div class="cert-placeholder" style="display:none"><i class="fas fa-code"></i></div>
-                    </div>
-                    <div class="cert-info">
-                        <div class="cert-meta">
-                            <span class="cert-badge">Scaler</span>
-                            <span>Verified</span>
+                    <div class="cert-header">
+                        <div class="cert-icon-box">
+                            <i class="fas fa-user-shield"></i>
                         </div>
-                        <h3>C Programming</h3>
-                        <p class="text-muted" style="font-size: 0.9rem;">Fundamental concepts of C language and memory management.</p>
-                    </div>
-                    <div class="cert-actions">
-                        <a href="https://moonshot.scaler.com/s/li/G6hCGA5ABO" target="_blank" class="btn btn-primary btn-small">
-                            <i class="fas fa-external-link-alt"></i> Verify
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate 2: Pre Security (TryHackMe) -->
-                <div class="glass-card cert-card reveal-up" style="transition-delay: 100ms;">
-                    <div class="cert-img-wrapper">
-                        <!-- Placeholder Icon since no image uploaded, PDF is for link -->
-                        <div class="cert-placeholder" style="opacity: 1; color: var(--neon-cyan);"><i class="fas fa-shield-alt"></i></div>
-                    </div>
-                    <div class="cert-info">
-                        <div class="cert-meta">
-                            <span class="cert-badge" style="background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border-color: var(--neon-cyan);">TryHackMe</span>
-                            <span>13 Oct 2025</span>
+                        <div class="cert-title-area">
+                            <h3>Cyber Security 101</h3>
+                            <span class="cert-badge">TryHackMe</span>
                         </div>
-                        <h3>Pre Security</h3>
-                        <p class="text-muted" style="font-size: 0.9rem;">Cybersecurity basics, networking, and web fundamentals.</p>
                     </div>
-                    <div class="cert-actions">
-                        <a href="THM-KKEKXWBHP1.pdf" target="_blank" class="btn btn-outline btn-small">
-                            <i class="fas fa-file-pdf"></i> View PDF
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificate 3: Cyber Security 101 (TryHackMe) -->
-                <div class="glass-card cert-card reveal-up" style="transition-delay: 200ms;">
-                    <div class="cert-img-wrapper">
-                        <!-- Placeholder Icon -->
-                        <div class="cert-placeholder" style="opacity: 1; color: #ff4d4d;"><i class="fas fa-user-secret"></i></div>
-                    </div>
-                    <div class="cert-info">
-                        <div class="cert-meta">
-                            <span class="cert-badge" style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border-color: #ff4d4d;">TryHackMe</span>
-                            <span>25 Dec 2025</span>
+                    <div class="cert-body">
+                        <div class="cert-desc">
+                            <p>Learn everything you need to embark on a career path in offensive or defensive cyber security.</p>
+                            <ul>
+                                <li>Explore computer networking and cryptography</li>
+                                <li>Learn the basics of Linux, Windows, and Active Directory</li>
+                                <li>Explore the world of offensive cyber security</li>
+                                <li>Discover techniques used in defensive security</li>
+                            </ul>
                         </div>
-                        <h3>Cyber Security 101</h3>
-                        <p class="text-muted" style="font-size: 0.9rem;">Introduction to offensive security and digital defense.</p>
                     </div>
-                    <div class="cert-actions">
+                    <div class="cert-footer">
                         <a href="THM-GRLXWHV1PQ.pdf" target="_blank" class="btn btn-outline btn-small">
-                            <i class="fas fa-file-pdf"></i> View PDF
+                            <i class="fas fa-eye"></i> View Cert
+                        </a>
+                        <a href="THM-GRLXWHV1PQ.pdf" download class="btn btn-outline btn-small">
+                            <i class="fas fa-download"></i> PDF
+                        </a>
+                        <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="btn btn-primary btn-small">
+                            <i class="fas fa-check-circle"></i> Verify
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Certificate 2: Pre Security -->
+                <div class="glass-card cert-card reveal-up" style="transition-delay: 100ms;">
+                    <div class="cert-header">
+                        <div class="cert-icon-box">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="cert-title-area">
+                            <h3>Pre Security</h3>
+                            <span class="cert-badge">TryHackMe</span>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-desc">
+                            <p>Before hacking something, you must understand the fundamentals.</p>
+                            <ul>
+                                <li>Cyber security fundamentals</li>
+                                <li>Networking basics and common weaknesses</li>
+                                <li>The web and common attack techniques</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="cert-footer">
+                        <a href="THM-KKEKXWBHP1.pdf" target="_blank" class="btn btn-outline btn-small">
+                            <i class="fas fa-eye"></i> View Cert
+                        </a>
+                        <a href="THM-KKEKXWBHP1.pdf" download class="btn btn-outline btn-small">
+                            <i class="fas fa-download"></i> PDF
+                        </a>
+                        <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="btn btn-primary btn-small">
+                            <i class="fas fa-check-circle"></i> Verify
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Certificate 3: C Programming -->
+                <div class="glass-card cert-card reveal-up" style="transition-delay: 200ms;">
+                    <div class="cert-header">
+                        <div class="cert-icon-box">
+                            <img src="clanguage.png" alt="C" class="cert-icon-img" onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fas fa-code\'></i>'">
+                        </div>
+                        <div class="cert-title-area">
+                            <h3>C Programming</h3>
+                            <span class="cert-badge" style="color: var(--gold); border-color: rgba(255, 215, 0, 0.3); background: rgba(255, 215, 0, 0.05);">Scaler</span>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-desc">
+                            <p>Strong foundation in C programming concepts including logic building, loops, arrays, and problem-solving.</p>
+                        </div>
+                    </div>
+                    <div class="cert-footer">
+                        <a href="https://moonshot.scaler.com/s/li/G6hCGA5ABO" target="_blank" class="btn btn-primary btn-small" style="width: 100%;">
+                            <i class="fas fa-external-link-alt"></i> Verify Certificate
                         </a>
                     </div>
                 </div>
@@ -692,7 +749,7 @@
             </div>
 
             <p class="text-center mb-5 reveal-up text-muted">
-                Currently learning cybersecurity hands-on using <span class="gold-text">TryHackMe</span>. Focused on CTF challenges, hackathons, Linux, shell scripting & fundamentals.
+                Hands-on practice is key. I actively solve labs on <span class="gold-text">TryHackMe</span> and participate in CTF challenges to apply theoretical knowledge in simulated environments.
             </p>
 
             <div class="projects-grid">
@@ -700,31 +757,31 @@
                 <div class="project-card glass-card reveal-up" data-category="web" onclick="openModal('modal-1')">
                     <div class="card-icon"><i class="fas fa-bug"></i></div>
                     <h3>Web App Security</h3>
-                    <p>Deep dive into OWASP Top 10 learning path. Analyzing XSS, SQLi, and IDOR vulnerabilities.</p>
+                    <p class="text-muted">Deep dive into OWASP Top 10. Analyzing vulnerabilities like XSS, SQLi, and IDOR.</p>
                     <button class="btn-text">View Details <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <!-- Project 2 -->
                 <div class="project-card glass-card reveal-up" data-category="network" onclick="openModal('modal-2')">
                     <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-                    <h3>Network Security Basics</h3>
-                    <p>Analyzing packet captures with Wireshark, understanding TCP handshakes, and NMAP scanning.</p>
+                    <h3>Network Security</h3>
+                    <p class="text-muted">Analyzing packet captures with Wireshark and understanding NMAP scanning techniques.</p>
                     <button class="btn-text">View Details <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <!-- Project 3 -->
                 <div class="project-card glass-card reveal-up" data-category="ctf" onclick="openModal('modal-3')">
-                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="card-icon"><i class="fas fa-flag"></i></div>
                     <h3>TryHackMe Progress</h3>
-                    <p>Maintaining a daily streak. Completed "Pre-Security" and currently working on "Jr Penetration Tester".</p>
+                    <p class="text-muted">Consistent learning streak. Completed paths: Pre-Security & Cyber Security 101.</p>
                     <button class="btn-text">View Details <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <!-- Project 4 -->
                 <div class="project-card glass-card reveal-up" data-category="ctf" onclick="openModal('modal-4')">
-                    <div class="card-icon"><i class="fas fa-flag"></i></div>
-                    <h3>CTF Practice</h3>
-                    <p>Participating in beginner-friendly CTFs (Capture The Flag) to apply Linux and cryptography skills.</p>
+                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Cryptography</h3>
+                    <p class="text-muted">Solving challenges involving Caesar ciphers, Vigenere ciphers, and Steganography.</p>
                     <button class="btn-text">View Details <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -740,7 +797,7 @@
             </div>
             
             <p class="mb-5 reveal-up text-muted" style="max-width: 600px;">
-                Sharing knowledge is the best way to learn. I run two channels under <strong class="gold-text">TrendHiveAcademy</strong>.
+                I believe in learning by teaching. I run two channels under <strong class="gold-text">TrendHiveAcademy</strong> to share what I learn.
             </p>
 
             <div class="yt-grid">
@@ -749,8 +806,8 @@
                     <div class="yt-icon"><i class="fab fa-youtube"></i></div>
                     <h3>TrendHiveAcademy (Hindi)</h3>
                     <p class="text-muted">Cybersecurity concepts, tool tutorials, and tech safety tips explained in Hindi for the community.</p>
-                    <div class="yt-actions">
-                        <a href="https://www.youtube.com/@TrendHiveAcademy" target="_blank" rel="noopener noreferrer" class="btn btn-red">Visit Channel</a>
+                    <div style="margin-top: 20px;">
+                        <a href="https://www.youtube.com/@TrendHiveAcademy" target="_blank" class="btn btn-red">Visit Channel</a>
                     </div>
                 </div>
 
@@ -759,8 +816,8 @@
                     <div class="yt-icon"><i class="fab fa-youtube"></i></div>
                     <h3>TrendHiveAcademy (English)</h3>
                     <p class="text-muted">Global content focusing on installation guides, Linux tutorials, and tech commentary.</p>
-                    <div class="yt-actions">
-                        <a href="https://www.youtube.com/@TrendHiveAcademyEnglish" target="_blank" rel="noopener noreferrer" class="btn btn-red">Visit Channel</a>
+                    <div style="margin-top: 20px;">
+                        <a href="https://www.youtube.com/@TrendHiveAcademyEnglish" target="_blank" class="btn btn-red">Visit Channel</a>
                     </div>
                 </div>
             </div>
@@ -798,7 +855,7 @@
                 </div>
                 
                 <!-- TRYHACKME BADGE -->
-                <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" rel="noopener noreferrer" class="thm-badge">
+                <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="thm-badge">
                     <div class="thm-icon"><i class="fas fa-robot"></i></div>
                     <div class="thm-text">
                         <span>TryHackMe Profile</span>
@@ -837,7 +894,7 @@
         
         <div class="modal" id="modal-2">
             <div class="modal-header">
-                <h3>Network Security Basics</h3>
+                <h3>Network Security</h3>
                 <button class="close-modal" onclick="closeModal('modal-2')"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body text-muted">
@@ -887,7 +944,7 @@
 
         /* --- 2. TYPEWRITER EFFECT --- */
         const typeWriterElement = document.getElementById('typewriter');
-        const phrases = ["NITIN RAJ", "Cyber Security Researcher", "Penetration Tester (aspiring)", "Network Analyst"];
+        const phrases = ["NITIN RAJ", "Cyber Security Researcher", "Aspiring Penetration Tester", "Network Analyst"];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;

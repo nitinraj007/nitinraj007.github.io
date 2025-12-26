@@ -2,30 +2,19 @@
 <html lang="en">
 <!-- 
     =============================================================================
-    |  HOW TO EDIT THIS PORTFOLIO                                               |
+    |  CYBER SECURITY PORTFOLIO V2.0                                            |
     =============================================================================
     
-    1. WHATSAPP & CONTACT:
-       - Search for "wa.me" to update the phone number (+91 7277839446) and message.
-       - Search for "mailto:" to update the email fallback.
-
-    2. LINKS (YouTube, TryHackMe, Socials):
-       - Search for "TrendHiveAcademy" to update YouTube links.
-       - Search for "tryhackme.com" to update the Footer Badge.
-       - Search for "github.com" or "instagram.com" to update social icons in the footer.
-
-    3. HERO TEXT (Typewriter):
-       - Scroll to the <script> tag at the bottom.
-       - Find "const phrases = [...]" to change the rotating text.
-       - The subline "From Gaya, Bihar" is in the HTML under id="hero".
-
-    4. SKILL PERCENTAGES:
-       - In the HTML under id="skills", look for data-width="40%", etc.
-       - Update the percentage in data-width AND the text inside the div.
-
-    5. COLORS:
-       - Scroll to the <style> tag in the <head>.
-       - Update --bg-dark, --gold, --teal variables to change the theme.
+    UPDATES IN V2.0:
+    - Added "Certifications" section (id="certifications")
+    - Enhanced "Cyber/Hacker" aesthetic (Scanlines, Grid, Neon)
+    - Improved typography and spacing
+    - Added "Download Resume" button in Hero
+    
+    CONTENT MANAGEMENT:
+    1. CERTIFICATES: Search for id="certifications" to edit titles, dates, or links.
+    2. CONTACT: Search for "wa.me" or "mailto:" to update contact info.
+    3. SKILLS: Update data-width attributes in the "Arsenal" section.
     
     =============================================================================
 -->
@@ -40,9 +29,9 @@
     <meta property="og:title" content="Nitin Raj | Cyber Security Researcher">
     <meta property="og:description" content="Finding vulnerabilities before attackers do. Portfolio of an aspiring Penetration Tester from Gaya, Bihar.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://nitinraj007.github.io/portfolio/og-image.jpg"> <!-- Replace with actual image URL later -->
+    <meta property="og:image" content="https://nitinraj007.github.io/portfolio/og-image.jpg">
     
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,35 +46,36 @@
         "https://www.youtube.com/@TrendHiveAcademyEnglish",
         "https://www.instagram.com/nitin.007_/",
         "https://x.com/NitinRaj24693"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Gaya",
-        "addressRegion": "Bihar",
-        "addressCountry": "India"
-      }
+      ]
     }
     </script>
 
-    <!-- Fonts: Inter & Playfair Display -->
+    <!-- Fonts: Inter, JetBrains Mono (Terminal Font), Playfair -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- Icons (FontAwesome CDN) -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS VARIABLES & THEME --- */
+        /* --- CSS VARIABLES & CYBER THEME --- */
         :root {
-            --bg-dark: #0b0f1a;
-            --bg-darker: #05070a;
-            --gold: #D4AF37;
-            --teal: #00BFA6;
+            /* Palette */
+            --bg-dark: #05070a;       /* Deep Black */
+            --bg-panel: #0b0f1a;      /* Panel Black */
+            --neon-green: #00ff9d;    /* Hacker Green */
+            --neon-cyan: #00f3ff;     /* Cyber Blue */
+            --gold: #FFD700;          /* Classic Gold */
             --text-main: #e2e8f0;
-            --text-muted: #AAB2C1;
-            --glass: rgba(17, 25, 40, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-muted: #94a3b8;
+            
+            /* Effects */
+            --glass: rgba(11, 15, 26, 0.6);
+            --glass-border: rgba(0, 255, 157, 0.1);
+            --glow: 0 0 10px rgba(0, 255, 157, 0.3);
+            
+            /* Fonts */
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -94,28 +84,57 @@
         /* --- RESET & BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
+        ::selection { background: var(--neon-green); color: var(--bg-dark); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-green); border-radius: 4px; }
+        
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: var(--font-body);
             overflow-x: hidden;
             line-height: 1.6;
+            position: relative;
         }
 
-        /* Accessibility: Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-            .typewriter-text::after { content: "Nitin Raj"; } /* Fallback static text */
+        /* --- CYBER AESTHETIC BACKGROUNDS --- */
+        
+        /* 1. Grid Background */
+        .cyber-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* 2. Scanline Overlay */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* 3. Vignette */
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at center, transparent 0%, #000 90%);
+            pointer-events: none;
         }
 
         /* --- UTILITIES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .gold-text { color: var(--gold); }
-        .teal-text { color: var(--teal); }
+        .neon-text { color: var(--neon-green); text-shadow: 0 0 5px rgba(0,255,157,0.5); }
+        .cyan-text { color: var(--neon-cyan); }
         .text-muted { color: var(--text-muted); }
         .mono { font-family: var(--font-mono); }
         .section-padding { padding: 100px 0; }
-        .bg-darker { background-color: var(--bg-darker); }
+        .bg-darker { background-color: rgba(0,0,0,0.3); }
         .text-center { text-align: center; }
         .mb-4 { margin-bottom: 1.5rem; }
         .mb-5 { margin-bottom: 3rem; }
@@ -125,12 +144,12 @@
         
         /* Buttons */
         .btn {
-            padding: 14px 32px;
-            border-radius: 4px;
+            padding: 12px 28px;
+            border-radius: 2px; /* Sharper edges for cyber look */
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.85rem;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -138,94 +157,116 @@
             letter-spacing: 1px;
             cursor: pointer;
             border: 1px solid transparent;
+            font-family: var(--font-mono);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        /* Glitch hover effect for buttons */
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::before { left: 100%; }
+
         .btn-whatsapp {
             background: rgba(37, 211, 102, 0.1);
             color: #25D366;
             border-color: #25D366;
-            box-shadow: 0 0 15px rgba(37, 211, 102, 0.1);
+            box-shadow: 0 0 10px rgba(37, 211, 102, 0.1);
         }
-        
-        .btn-whatsapp:hover {
-            background: #25D366;
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.4);
-        }
+        .btn-whatsapp:hover { background: #25D366; color: #000; box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
 
         .btn-outline {
-            border-color: var(--glass-border);
-            color: #fff;
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
             background: transparent;
         }
-        
         .btn-outline:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            text-shadow: 0 0 5px var(--neon-cyan);
         }
         
         .btn-red {
             background: rgba(255, 0, 0, 0.1);
             color: #ff4d4d;
-            border-color: rgba(255,0,0,0.3);
+            border-color: #ff4d4d;
         }
-        .btn-red:hover { background: #ff0000; color: white; border-color: #ff0000; }
+        .btn-red:hover { background: #ff0000; color: #000; box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+
+        .btn-primary {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        .btn-primary:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
 
         /* Glass Card */
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 30px;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .glass-card:hover {
-            border-color: var(--teal);
+            border-color: var(--neon-green);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(0, 191, 166, 0.15);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.1);
         }
+        
+        /* Corner accents for cards */
+        .glass-card::after {
+            content: ''; position: absolute; top: 0; right: 0; width: 10px; height: 10px;
+            border-top: 2px solid var(--neon-green); border-right: 2px solid var(--neon-green);
+            opacity: 0; transition: 0.3s;
+        }
+        .glass-card:hover::after { opacity: 1; }
 
         /* --- NAV --- */
         .glass-nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(11, 15, 26, 0.9); backdrop-filter: blur(10px);
+            background: rgba(5, 7, 10, 0.9); backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border); padding: 20px 0;
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: 1px; color: #fff; }
-        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--teal); }
-        .mobile-menu-btn { display: none; color: #fff; cursor: pointer; font-size: 1.5rem; }
+        .logo { font-family: var(--font-mono); font-weight: 700; font-size: 1.5rem; letter-spacing: 1px; color: #fff; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; font-family: var(--font-mono); }
+        .nav-links a:hover { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
+        .mobile-menu-btn { display: none; color: var(--neon-green); cursor: pointer; font-size: 1.5rem; }
 
         /* --- HERO --- */
         #hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 85%); z-index: 2; pointer-events: none; }
         .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; perspective: 1000px; }
         
         .hero-title { 
             font-family: var(--font-heading); 
-            font-size: 3.5rem; 
+            font-size: 4rem; 
             line-height: 1.2; 
             margin: 20px 0; 
             color: #fff;
-            min-height: 1.4em; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
         
         .typewriter-text { 
-            background: linear-gradient(90deg, #fff, var(--text-muted)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            border-bottom: 2px solid var(--gold);
+            font-family: var(--font-mono);
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.4);
         }
-        .cursor { animation: blink 1s infinite; color: var(--teal); margin-left: 5px; font-weight: 100;}
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; letter-spacing: 0.5px; }
-        .divider { color: var(--teal); margin: 0 12px; }
+        .cursor { animation: blink 1s infinite; color: var(--neon-green); margin-left: 5px; }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; letter-spacing: 1px; }
+        .divider { color: var(--neon-green); margin: 0 12px; }
         
         .hero-cta { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
@@ -233,56 +274,79 @@
 
         /* --- SECTIONS --- */
         .section-header { margin-bottom: 60px; position: relative; }
-        .section-tag { font-family: var(--font-mono); color: var(--teal); display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 2px; }
+        .section-tag { font-family: var(--font-mono); color: var(--neon-green); display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 2px; text-shadow: 0 0 5px rgba(0,255,157,0.3); }
         .section-header h2 { font-family: var(--font-heading); font-size: 2.8rem; color: #fff; }
         .section-header::after {
             content: ''; position: absolute; left: 0; bottom: -10px; width: 60px; height: 3px;
-            background: linear-gradient(90deg, var(--teal), var(--gold));
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            box-shadow: 0 0 10px var(--neon-green);
         }
 
         /* About & Timeline */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .lead-text { font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px; color: #d1d5db; }
         
-        .timeline { position: relative; padding-left: 30px; border-left: 2px solid rgba(255,255,255,0.1); margin-top: 20px; }
+        .timeline { position: relative; padding-left: 30px; border-left: 2px solid rgba(0, 255, 157, 0.2); margin-top: 20px; }
         .timeline-item { position: relative; margin-bottom: 40px; }
-        .timeline-dot { position: absolute; left: -36px; top: 5px; width: 10px; height: 10px; background: var(--teal); border-radius: 50%; box-shadow: 0 0 10px var(--teal); }
+        .timeline-dot { position: absolute; left: -36px; top: 5px; width: 10px; height: 10px; background: var(--bg-dark); border: 2px solid var(--neon-green); border-radius: 50%; box-shadow: 0 0 10px var(--neon-green); }
         .timeline-date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold); margin-bottom: 5px; }
         .timeline-content h4 { color: #fff; font-size: 1.1rem; }
-        .timeline-content p { font-size: 0.9rem; color: var(--text-muted); }
-
+        
         /* Skills */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .skill-card { display: flex; align-items: center; gap: 20px; }
-        .skill-icon { font-size: 1.8rem; color: var(--gold); min-width: 40px; text-align: center; }
+        .skill-icon { font-size: 1.8rem; color: var(--neon-cyan); min-width: 40px; text-align: center; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
         .skill-details { width: 100%; }
         .skill-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .skill-details h4 { font-size: 0.95rem; color: #fff; }
-        .skill-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--teal); }
-        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
-        .progress { height: 100%; background: var(--teal); width: 0; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .skill-details h4 { font-size: 0.95rem; color: #fff; font-family: var(--font-mono); }
+        .skill-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-green); }
+        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
+        .progress { height: 100%; background: var(--neon-green); width: 0; box-shadow: 0 0 10px var(--neon-green); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* --- NEW: CERTIFICATIONS SECTION --- */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .cert-card { 
+            display: flex; flex-direction: column; gap: 15px; 
+            overflow: hidden; padding: 25px; 
+            border-left: 3px solid transparent;
+        }
+        .cert-card:hover { border-left-color: var(--neon-green); }
+        
+        .cert-img-wrapper {
+            width: 100%; height: 160px; background: rgba(0,0,0,0.3);
+            border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--glass-border); position: relative;
+        }
+        .cert-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .cert-placeholder { font-size: 3rem; color: var(--text-muted); opacity: 0.5; }
+        .cert-card:hover .cert-img { transform: scale(1.05); }
+
+        .cert-info h3 { color: #fff; font-size: 1.2rem; margin-bottom: 5px; }
+        .cert-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); margin-bottom: 15px; }
+        .cert-badge { background: rgba(255, 215, 0, 0.1); color: var(--gold); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(255, 215, 0, 0.2); }
+        
+        .cert-actions { display: flex; gap: 10px; margin-top: auto; }
+        .btn-small { padding: 8px 16px; font-size: 0.75rem; }
 
         /* Projects */
         .filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-family: var(--font-mono); font-size: 0.85rem; }
-        .filter-btn:hover, .filter-btn.active { border-color: var(--teal); color: var(--teal); background: rgba(0, 191, 166, 0.05); }
+        .filter-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 20px; border-radius: 2px; cursor: pointer; transition: 0.3s; font-family: var(--font-mono); font-size: 0.85rem; }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 157, 0.2); }
 
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .project-card { cursor: pointer; position: relative; overflow: hidden; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--teal), transparent); opacity: 0; transition: 0.3s; }
+        .project-card { cursor: pointer; position: relative; overflow: hidden; transition: 0.3s; }
+        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--neon-green), transparent); opacity: 0; transition: 0.3s; }
         .project-card:hover::before { opacity: 1; }
-        .card-icon { font-size: 2rem; color: var(--teal); margin-bottom: 15px; }
-        .btn-text { background: none; border: none; color: var(--gold); cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .card-icon { font-size: 2rem; color: var(--neon-green); margin-bottom: 15px; }
+        .btn-text { background: none; border: none; color: var(--gold); cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono); }
 
         /* YouTube */
         .yt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .yt-card { border-left: 3px solid #ff0000; position: relative; }
-        .yt-icon { font-size: 2.5rem; color: #FF0000; margin-bottom: 15px; }
-        .yt-actions { display: flex; gap: 15px; margin-top: 25px; }
+        .yt-card { border-left: 3px solid #ff0000; }
+        .yt-icon { font-size: 2.5rem; color: #FF0000; margin-bottom: 15px; text-shadow: 0 0 15px rgba(255,0,0,0.4); }
 
         /* Footer */
-        footer { position: relative; background: #000; padding-top: 60px; padding-bottom: 30px; margin-top: 100px; }
-        .glass-strip { position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--glass-border), transparent); }
+        footer { position: relative; background: #000; padding-top: 60px; padding-bottom: 30px; margin-top: 100px; border-top: 1px solid var(--glass-border); }
         .footer-content { display: flex; flex-direction: column; align-items: center; }
         .footer-top { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; }
         
@@ -292,30 +356,29 @@
             border-radius: 50px; text-decoration: none; 
             border: 1px solid var(--glass-border); transition: 0.3s; 
         }
-        .thm-badge:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); transform: translateY(-2px); }
+        .thm-badge:hover { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 157, 0.2); transform: translateY(-2px); }
         .thm-icon { font-size: 1.5rem; color: #fff; }
-        .thm-text { display: flex; flex-direction: column; }
-        .thm-text span:first-child { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
+        .thm-text span:first-child { color: var(--neon-green); font-weight: 700; font-size: 0.9rem; }
         .thm-text span:last-child { color: var(--text-muted); font-size: 0.8rem; font-family: var(--font-mono); }
         
         .social-links { display: flex; gap: 25px; margin-bottom: 30px; }
         .social-links a { color: var(--text-muted); font-size: 1.5rem; transition: 0.3s; }
-        .social-links a:hover { color: var(--teal); transform: translateY(-3px); }
+        .social-links a:hover { color: var(--neon-green); transform: translateY(-3px); text-shadow: 0 0 10px var(--neon-green); }
 
         /* Modals */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; }
-        .modal { background: var(--bg-dark); border: 1px solid var(--teal); width: 90%; max-width: 500px; padding: 30px; opacity: 0; transform: scale(0.9); transition: 0.3s; border-radius: 12px; box-shadow: 0 0 50px rgba(0, 191, 166, 0.1); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; }
+        .modal { background: var(--bg-panel); border: 1px solid var(--neon-green); width: 90%; max-width: 500px; padding: 30px; opacity: 0; transform: scale(0.9); transition: 0.3s; border-radius: 4px; box-shadow: 0 0 50px rgba(0, 255, 157, 0.15); }
         .modal.active, .modal-overlay.active { opacity: 1; pointer-events: all; }
         .modal.active { transform: scale(1); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .close-modal { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; transition: 0.2s; }
-        .close-modal:hover { color: var(--gold); }
+        .close-modal:hover { color: var(--neon-green); }
 
         /* Loader */
-        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; }
-        .loader-bar { width: 200px; height: 2px; background: #333; margin-top: 10px; overflow: hidden; }
-        .loader-progress { width: 100%; height: 100%; background: var(--teal); animation: load 2s ease-in-out infinite; }
-        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; flex-direction: column; gap: 20px; }
+        .loader-bar { width: 200px; height: 2px; background: #333; overflow: hidden; position: relative; }
+        .loader-progress { width: 50%; height: 100%; background: var(--neon-green); position: absolute; left: 0; animation: scan 1.5s ease-in-out infinite; box-shadow: 0 0 10px var(--neon-green); }
+        @keyframes scan { 0% { left: -50%; } 100% { left: 100%; } }
 
         /* Animations */
         .reveal-text, .reveal-up, .reveal-left, .reveal-right { opacity: 0; transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -338,10 +401,9 @@
             .hero-title { font-size: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(11, 15, 26, 0.98); padding: 20px; border-bottom: 1px solid var(--gold); }
+            .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-panel); padding: 20px; border-bottom: 1px solid var(--neon-green); }
             .mobile-menu-btn { display: block; }
             .hero-content { padding-top: 60px; }
-            .btn-outline { margin-left: 0; margin-top: 15px; width: 100%; justify-content: center; }
             .hero-cta { flex-direction: column; width: 100%; }
             .btn-whatsapp { width: 100%; justify-content: center; }
             .footer-top { flex-direction: column; text-align: center; }
@@ -350,28 +412,32 @@
 </head>
 <body class="dark-theme">
 
+    <!-- Cyber Background Elements -->
+    <div class="cyber-grid"></div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
     <!-- Loading Overlay -->
     <div id="loader">
-        <div class="loader-content text-center">
-            <span class="mono teal-text">INITIALIZING SYSTEM...</span>
-            <div class="loader-bar"><div class="loader-progress"></div></div>
-        </div>
+        <span class="mono neon-text" style="font-size: 0.9rem; letter-spacing: 2px;">INITIALIZING SYSTEM...</span>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
 
     <!-- Navigation -->
     <nav class="glass-nav">
         <div class="container nav-container">
-            <div class="logo">NITIN<span class="teal-text">RAJ</span></div>
+            <div class="logo">NITIN<span class="neon-text">RAJ</span>_</div>
             <div class="mobile-menu-btn" aria-label="Toggle Menu">
                 <i class="fas fa-bars"></i>
             </div>
             <div class="nav-links">
                 <a href="#hero">Home</a>
-                <a href="#about">About</a>
+                <a href="#about">Identity</a>
                 <a href="#skills">Arsenal</a>
+                <a href="#certifications">Certs</a> <!-- Added Link -->
                 <a href="#projects">Operations</a>
-                <a href="#youtube">Content</a>
-                <a href="#contact">Contact</a>
+                <a href="#youtube">Media</a>
+                <a href="#contact">Signal</a>
             </div>
         </div>
     </nav>
@@ -379,28 +445,31 @@
     <!-- 1. HERO SECTION -->
     <section id="hero">
         <canvas id="particles-canvas"></canvas>
-        <div class="hero-overlay"></div>
         
         <div class="container hero-content" data-parallax>
             <div class="hero-text-wrapper">
-                <p class="mono gold-text fade-in-up delay-1">System Online // Identity Verified</p>
+                <p class="mono neon-text fade-in-up delay-1">
+                    <i class="fas fa-terminal"></i> System Online // Root Access Granted
+                </p>
                 
                 <h1 class="hero-title fade-in-up delay-2">
-                    <span class="typewriter-text" id="typewriter"></span><span class="cursor">|</span>
+                    <span class="typewriter-text" id="typewriter"></span><span class="cursor">_</span>
                 </h1>
                 
                 <p class="hero-subtitle fade-in-up delay-3">
-                    Finding vulnerabilities before attackers do. <span class="divider">•</span> From Gaya, Bihar
+                    Finding vulnerabilities before attackers do. <span class="divider">/</span> From Gaya, Bihar
                 </p>
                 
                 <div class="hero-cta fade-in-up delay-4">
-                    <a href="https://wa.me/917277839446?text=Hi%20Nitin%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." 
-                       target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"
-                       class="btn btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> Transmit Message
+                    <a href="https://wa.me/917277839446" target="_blank" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Initiate Chat
                     </a>
                     <a href="#projects" class="btn btn-outline">
-                        View Projects
+                        View Operations
+                    </a>
+                    <!-- New Resume Button -->
+                    <a href="#" onclick="alert('Resume download coming soon!')" class="btn btn-primary">
+                        <i class="fas fa-file-download"></i> Download Resume
                     </a>
                 </div>
             </div>
@@ -420,7 +489,7 @@
                         I am a 19-year-old Cyber Security student at <strong class="gold-text">Galgotias University</strong>.
                     </p>
                     <p class="text-muted">
-                        My journey began in <strong class="teal-text">Gaya, Bihar</strong>, where I developed a fascination for the hidden layers of the internet. Today, I am an aspiring Penetration Tester, spending my nights on TryHackMe and my days analyzing network packets. My goal is simple: secure the digital infrastructure by thinking like the adversary.
+                        My journey began in <strong class="neon-text">Gaya, Bihar</strong>, where I developed a fascination for the hidden layers of the internet. Today, I am an aspiring Penetration Tester, spending my nights on TryHackMe and my days analyzing network packets. My goal is simple: secure the digital infrastructure by thinking like the adversary.
                     </p>
                 </div>
                 
@@ -442,14 +511,6 @@
                             <div class="timeline-content">
                                 <h4>Completed Class 12th</h4>
                                 <p>From Gaya, Bihar. Background in Science & Mathematics.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-date">Early Days</div>
-                            <div class="timeline-content">
-                                <h4>Completed Class 10th</h4>
-                                <p>From Gaya, Bihar. Early interest in technology.</p>
                             </div>
                         </div>
                     </div>
@@ -537,11 +598,89 @@
         </div>
     </section>
 
-    <!-- 4. PROJECTS & WRITEUPS -->
-    <section id="projects" class="section-padding">
+    <!-- NEW SECTION: CERTIFICATIONS & LEARNING PATHS -->
+    <section id="certifications" class="section-padding">
         <div class="container">
             <div class="section-header reveal-text">
-                <span class="section-tag">03. OPERATIONS</span>
+                <span class="section-tag">03. CREDENTIALS</span>
+                <h2>Certifications & Learning Paths</h2>
+            </div>
+            
+            <div class="cert-grid">
+                
+                <!-- Certificate 1: C Programming (Scaler) -->
+                <div class="glass-card cert-card reveal-up">
+                    <div class="cert-img-wrapper">
+                        <!-- Using uploaded image file -->
+                        <img src="clanguage.png" alt="C Programming" class="cert-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                        <div class="cert-placeholder" style="display:none"><i class="fas fa-code"></i></div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-meta">
+                            <span class="cert-badge">Scaler</span>
+                            <span>Verified</span>
+                        </div>
+                        <h3>C Programming</h3>
+                        <p class="text-muted" style="font-size: 0.9rem;">Fundamental concepts of C language and memory management.</p>
+                    </div>
+                    <div class="cert-actions">
+                        <a href="https://moonshot.scaler.com/s/li/G6hCGA5ABO" target="_blank" class="btn btn-primary btn-small">
+                            <i class="fas fa-external-link-alt"></i> Verify
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Certificate 2: Pre Security (TryHackMe) -->
+                <div class="glass-card cert-card reveal-up" style="transition-delay: 100ms;">
+                    <div class="cert-img-wrapper">
+                        <!-- Placeholder Icon since no image uploaded, PDF is for link -->
+                        <div class="cert-placeholder" style="opacity: 1; color: var(--neon-cyan);"><i class="fas fa-shield-alt"></i></div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-meta">
+                            <span class="cert-badge" style="background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border-color: var(--neon-cyan);">TryHackMe</span>
+                            <span>13 Oct 2025</span>
+                        </div>
+                        <h3>Pre Security</h3>
+                        <p class="text-muted" style="font-size: 0.9rem;">Cybersecurity basics, networking, and web fundamentals.</p>
+                    </div>
+                    <div class="cert-actions">
+                        <a href="THM-KKEKXWBHP1.pdf" target="_blank" class="btn btn-outline btn-small">
+                            <i class="fas fa-file-pdf"></i> View PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Certificate 3: Cyber Security 101 (TryHackMe) -->
+                <div class="glass-card cert-card reveal-up" style="transition-delay: 200ms;">
+                    <div class="cert-img-wrapper">
+                        <!-- Placeholder Icon -->
+                        <div class="cert-placeholder" style="opacity: 1; color: #ff4d4d;"><i class="fas fa-user-secret"></i></div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-meta">
+                            <span class="cert-badge" style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border-color: #ff4d4d;">TryHackMe</span>
+                            <span>25 Dec 2025</span>
+                        </div>
+                        <h3>Cyber Security 101</h3>
+                        <p class="text-muted" style="font-size: 0.9rem;">Introduction to offensive security and digital defense.</p>
+                    </div>
+                    <div class="cert-actions">
+                        <a href="THM-GRLXWHV1PQ.pdf" target="_blank" class="btn btn-outline btn-small">
+                            <i class="fas fa-file-pdf"></i> View PDF
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROJECTS & WRITEUPS -->
+    <section id="projects" class="section-padding bg-darker">
+        <div class="container">
+            <div class="section-header reveal-text">
+                <span class="section-tag">04. OPERATIONS</span>
                 <h2>Projects & Learning</h2>
             </div>
 
@@ -593,10 +732,10 @@
     </section>
 
     <!-- 5. CONTENT CREATION -->
-    <section id="youtube" class="section-padding bg-darker">
+    <section id="youtube" class="section-padding">
         <div class="container">
             <div class="section-header reveal-text">
-                <span class="section-tag">04. MEDIA</span>
+                <span class="section-tag">05. MEDIA</span>
                 <h2>Content Creation</h2>
             </div>
             
@@ -632,15 +771,14 @@
     <section id="contact" class="section-padding">
         <div class="container text-center reveal-up">
             <div class="section-header">
-                <span class="section-tag">05. COMMUNICATION</span>
+                <span class="section-tag">06. UPLINK</span>
                 <h2>Initialize Handshake</h2>
             </div>
             <p class="text-muted" style="max-width: 500px; margin: 0 auto 40px auto;">
                 Whether you have a question about my research, want to discuss a project, or just want to connect.
             </p>
             <div class="d-flex" style="justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="https://wa.me/917277839446?text=Hi%20Nitin%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." 
-                   target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+                <a href="https://wa.me/917277839446" target="_blank" class="btn btn-whatsapp">
                     <i class="fab fa-whatsapp"></i> Transmit Message
                 </a>
                 <a href="mailto:nitinraj3884@gmail.com" class="btn btn-outline">
@@ -652,11 +790,10 @@
 
     <!-- 7. FOOTER -->
     <footer>
-        <div class="glass-strip"></div>
         <div class="container footer-content">
             <div class="footer-top">
                 <div class="footer-brand">
-                    <h2>NITIN<span class="teal-text">RAJ</span></h2>
+                    <h2>NITIN<span class="neon-text">RAJ</span>_</h2>
                     <p class="mono text-muted" style="font-size: 0.8rem;">Securing the future, one packet at a time.</p>
                 </div>
                 
@@ -671,22 +808,21 @@
             </div>
 
             <div class="social-links">
-                <a href="https://github.com/nitinraj007" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fab fa-github"></i></a>
-                <a href="https://www.instagram.com/nitin.007_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://x.com/NitinRaj24693" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/nitinraj007" target="_blank" aria-label="Github"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/nitin.007_/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/NitinRaj24693" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
             
-            <div class="copyright">
-                <p>&copy; Nitin Raj. All Rights Reserved.</p>
+            <div class="copyright text-muted" style="font-size: 0.8rem;">
+                <p>&copy; 2025 Nitin Raj. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- MODALS -->
     <div class="modal-overlay" id="modal-overlay" onclick="closeAllModals(event)">
-        <!-- Modals injected here by JS logic, or pre-defined below -->
-        
+        <!-- Project Modals -->
         <div class="modal" id="modal-1">
             <div class="modal-header">
                 <h3>Web App Security</h3>
@@ -751,11 +887,11 @@
 
         /* --- 2. TYPEWRITER EFFECT --- */
         const typeWriterElement = document.getElementById('typewriter');
-        const phrases = ["NITIN RAJ", "Cyber Security Researcher", "Penetration Tester (aspiring)"];
+        const phrases = ["NITIN RAJ", "Cyber Security Researcher", "Penetration Tester (aspiring)", "Network Analyst"];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
-        let typeSpeed = 100;
+        let typeSpeed = 80;
 
         function type() {
             const currentPhrase = phrases[phraseIndex];
@@ -763,11 +899,11 @@
             if (isDeleting) {
                 typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
-                typeSpeed = 50;
+                typeSpeed = 40;
             } else {
                 typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
-                typeSpeed = 100;
+                typeSpeed = 80;
             }
 
             if (!isDeleting && charIndex === currentPhrase.length) {
@@ -776,7 +912,7 @@
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
+                typeSpeed = 300;
             }
 
             setTimeout(type, typeSpeed);
@@ -802,7 +938,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    
                     // Animate Skill Bars
                     if(entry.target.querySelector('.progress')) {
                         const bar = entry.target.querySelector('.progress');
@@ -816,7 +951,7 @@
             observer.observe(el);
         });
 
-        /* --- 5. PARTICLE SYSTEM --- */
+        /* --- 5. PARTICLE SYSTEM (Matrix Style) --- */
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -839,7 +974,7 @@
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
-                ctx.fillStyle = 'rgba(0, 191, 166, 0.4)';
+                ctx.fillStyle = 'rgba(0, 255, 157, 0.3)';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -848,7 +983,6 @@
 
         function initParticles() {
             particlesArray = [];
-            // Reduced particle count for performance
             for (let i = 0; i < 40; i++) {
                 particlesArray.push(new Particle());
             }
@@ -859,6 +993,22 @@
             for (let i = 0; i < particlesArray.length; i++) {
                 particlesArray[i].update();
                 particlesArray[i].draw();
+            }
+            // Draw lines connecting particles
+            for(let a = 0; a < particlesArray.length; a++){
+                for(let b = a; b < particlesArray.length; b++){
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if(distance < 100){
+                         ctx.strokeStyle = `rgba(0, 255, 157, ${0.1 - distance/1000})`;
+                         ctx.lineWidth = 1;
+                         ctx.beginPath();
+                         ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                         ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                         ctx.stroke();
+                    }
+                }
             }
             if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
                  requestAnimationFrame(animateParticles);
@@ -911,7 +1061,6 @@
 
         window.closeModal = function(id) {
             document.getElementById(id).classList.remove('active');
-            // Check if any other modals are open before hiding overlay
             const activeModals = document.querySelectorAll('.modal.active');
             if(activeModals.length === 0) {
                 modalOverlay.classList.remove('active');
@@ -940,7 +1089,6 @@
             }
         });
         
-        // Close menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -950,8 +1098,4 @@
 
     </script>
 </body>
-
 </html>
-
-
-

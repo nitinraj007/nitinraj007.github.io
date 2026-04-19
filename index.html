@@ -4,536 +4,798 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nitin Raj — Penetration Tester</title>
-<meta name="description" content="Jr Penetration Tester · Top 4% TryHackMe · Offensive Security Enthusiast">
-<meta property="og:title" content="Nitin Raj — Penetration Tester">
-<meta property="og:description" content="Jr Penetration Tester · Top 4% TryHackMe · Offensive Security Enthusiast">
+<meta name="description" content="Jr Penetration Tester · Top 4% TryHackMe · Offensive Security">
 
-<!-- ONE FONT: Space Grotesk -->
+<!-- Syne (bold display) + Cormorant Garamond (elegant serif italic) + DM Sans (body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- AOS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-
 <style>
-/* ════════════════════════════════════════════
-   DESIGN TOKENS & POLYMORPHIC THEME
-════════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   TOKENS
+══════════════════════════════════════ */
 :root {
-  /* Backgrounds */
-  --bg:       #EAE6DF; /* Slightly darker to make Neumorphism pop */
-  --bg2:      #DFDBD3;
-  --white:    #FFFFFF;
-  --glass-bg: rgba(255, 255, 255, 0.45);
+  --cream:   #F6F2EB;
+  --cream2:  #EDE8DF;
+  --white:   #FEFCF9;
+  --yellow:  #F0A500;
+  --yellow2: #FFC840;
+  --black:   #0C0B09;
+  --ink:     #1C1A17;
+  --mid:     #6B6560;
+  --border:  rgba(0,0,0,.09);
+  --dark-bg: #100F0D;    /* warm very dark brown-black */
+  --dark-2:  #1A1814;
+  --dark-3:  #222019;
 
-  /* Accent */
-  --yellow:   #F5C842;
-  --yellow-d: #E6B52E;
-  --yellow-l: #FFDF70;
+  --f-disp: 'Syne', sans-serif;
+  --f-serif:'Cormorant Garamond', serif;
+  --f-body: 'DM Sans', sans-serif;
 
-  /* Bento card palette */
-  --lav:      #C8BFFF;
-  --lav2:     #DDD8FF;
-  --mint:     #BFF5D2;
-  --mint2:    #D6FAE6;
-  --coral:    #FFB7A5;
-  --coral2:   #FFCFC2;
-  --blue:     #A8D8FF;
-  --blue2:    #C6E8FF;
-  --cream:    #FFF1CC;
-  --lgray:    #D1CDA8;
-  --black:    #0C0C0C;
-  --ink:      #1A1A1A;
-  --muted:    #6B6B6B;
-  --border:   rgba(0,0,0,.08);
-
-  /* Typography */
-  --font:     'Space Grotesk', sans-serif;
-
-  /* Radii */
-  --r:        24px;
-  --r-sm:     12px;
-  --r-pill:   100px;
+  --r:  22px;
+  --r2: 30px;
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  --spring: cubic-bezier(.175,.885,.32,1.275);
 }
 
-/* ════════════════════════════════════════════
-   RESET & BASE
-════════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   RESET
+══════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
-}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: var(--f-body); overflow-x: hidden; cursor: none; -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--yellow); color: #000; }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; border: 2px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: var(--black); }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: #D4CDBC; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--yellow); }
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
 
-/* ════════════════════════════════════════════
-   CUSTOM CURSOR (Blend Mode)
-════════════════════════════════════════════ */
-#cursor {
-  position: fixed; z-index: 99999; pointer-events: none;
-  top: 0; left: 0; transform: translate(-50%, -50%);
-  width: 16px; height: 16px; border-radius: 50%;
-  background: var(--black);
-  transition: width .35s cubic-bezier(.175,.885,.32,1.275),
-              height .35s cubic-bezier(.175,.885,.32,1.275),
-              background .25s;
-  mix-blend-mode: multiply;
+/* ══════════════════════════════════════
+   SCROLL PROGRESS BAR
+══════════════════════════════════════ */
+#progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 99999;
+  background: var(--yellow); width: 0%; transition: width .1s linear;
 }
-#cursor.expand { width: 52px; height: 52px; background: var(--yellow); border: 2px solid var(--black); }
-@media (hover: none) { #cursor { display: none; } }
 
-/* ════════════════════════════════════════════
-   LIQUID GLASS (Navigation)
-════════════════════════════════════════════ */
-@keyframes liquidGlassMorph {
-  0% { border-radius: 40px 60px 50px 40px; }
-  50% { border-radius: 60px 40px 40px 60px; }
-  100% { border-radius: 40px 60px 50px 40px; }
+/* ══════════════════════════════════════
+   CURSOR
+══════════════════════════════════════ */
+#cur-dot {
+  position: fixed; z-index: 99998; pointer-events: none;
+  top: 0; left: 0; transform: translate(-50%,-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink);
+  transition: transform .15s, opacity .2s;
 }
+#cur-ring {
+  position: fixed; z-index: 99997; pointer-events: none;
+  top: 0; left: 0; transform: translate(-50%,-50%);
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(28,26,23,.3);
+  transition: width .4s var(--spring), height .4s var(--spring),
+              border-color .3s, background .3s, transform .08s;
+}
+#cur-ring.hov {
+  width: 56px; height: 56px;
+  background: rgba(240,165,0,.12);
+  border-color: var(--yellow);
+}
+#cur-ring.click { width: 24px; height: 24px; }
+@media(hover:none){ #cur-dot, #cur-ring { display:none; } body { cursor:auto; } }
+
+/* ══════════════════════════════════════
+   LOADER
+══════════════════════════════════════ */
+#ldr {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--dark-bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  transition: opacity .8s var(--ease), visibility .8s;
+}
+#ldr.out { opacity: 0; visibility: hidden; pointer-events: none; }
+.ldr-line { overflow: hidden; line-height: 1; }
+.ldr-word {
+  display: block; transform: translateY(110%);
+  font-family: var(--f-disp); font-weight: 800;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  letter-spacing: -2px; color: #fff;
+  animation: lup .7s var(--ease) forwards;
+}
+.ldr-line:nth-child(2) .ldr-word { animation-delay: .12s; color: var(--yellow); }
+.ldr-mono {
+  font-family: 'Courier New', monospace; font-size: .72rem;
+  color: rgba(255,255,255,.2); letter-spacing: 2px; text-transform: uppercase;
+  opacity: 0; animation: fadeIn .5s .4s both;
+}
+.ldr-bar { width: 80px; height: 1px; background: rgba(255,255,255,.1); overflow: hidden; border-radius: 2px; margin-top: 20px; }
+.ldr-fill { height: 100%; background: var(--yellow); animation: lfill 1.5s .1s var(--ease) forwards; }
+@keyframes lup { to { transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes lfill { from { width: 0; } to { width: 100%; } }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
 .nav {
-  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-  z-index: 9000; width: calc(100% - 40px); max-width: 1260px;
-  background: rgba(234, 230, 223, 0.5); /* Semi-transparent bg */
-  backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 10px 12px 10px 24px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  padding: 0 48px;
   display: flex; align-items: center; justify-content: space-between;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 8px 32px rgba(0,0,0,0.05);
-  animation: liquidGlassMorph 6s ease-in-out infinite;
-  transition: box-shadow .3s, transform 0.3s;
+  height: 68px;
+  background: rgba(246,242,235,.82);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  transition: background .4s, box-shadow .4s;
 }
-.nav.scrolled { box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 12px 40px rgba(0,0,0,.15); }
-.nav-logo { font-size: 1.05rem; font-weight: 700; letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
-.nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; box-shadow: inset 0 -2px 2px rgba(0,0,0,0.2), inset 0 2px 2px rgba(255,255,255,0.8); }
+.nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.06); }
+.nav-logo {
+  font-family: var(--f-disp); font-size: .95rem; font-weight: 800;
+  letter-spacing: .5px; display: flex; align-items: center; gap: 8px;
+}
+.nav-logo-mark {
+  width: 28px; height: 18px; background: var(--ink); border-radius: 100px;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.nav-logo-mark::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 12px; height: 12px; background: var(--yellow); border-radius: 50%;
+  transition: transform .3s var(--spring);
+}
+.nav-logo:hover .nav-logo-mark { background: var(--yellow); }
+.nav-logo:hover .nav-logo-mark::after { transform: translateX(10px); background: var(--ink); }
+
 .nav-links { display: flex; gap: 4px; }
 .nav-links a {
-  font-size: .75rem; font-weight: 600; letter-spacing: .3px;
-  padding: 8px 16px; border-radius: var(--r-pill); color: var(--muted);
-  transition: all .2s;
+  font-size: .75rem; font-weight: 500; color: var(--mid);
+  padding: 7px 16px; border-radius: 100px;
+  position: relative; transition: color .2s;
 }
-.nav-links a:hover { background: rgba(0,0,0,0.05); color: var(--black); box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 4px; left: 50%; right: 50%;
+  height: 1.5px; background: var(--yellow); border-radius: 2px;
+  transition: left .3s var(--ease), right .3s var(--ease);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { left: 16px; right: 16px; }
 
-/* ════════════════════════════════════════════
-   SKEUOMORPHISM (Buttons)
-════════════════════════════════════════════ */
-.btn {
-  font-family: var(--font); font-size: .75rem; font-weight: 700; letter-spacing: .5px;
-  padding: 14px 28px; border-radius: var(--r-pill); cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
+.nav-cta {
+  font-family: var(--f-disp); font-size: .72rem; font-weight: 700;
+  background: var(--ink); color: #fff;
+  padding: 10px 22px; border-radius: 100px; border: none; cursor: none;
+  display: flex; align-items: center; gap: 8px;
+  transition: background .25s, transform .2s;
   position: relative; overflow: hidden;
-  text-transform: uppercase;
 }
-.btn:active { transform: translateY(4px) scale(0.98); }
+.nav-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--yellow); transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.nav-cta:hover::before { transform: scaleX(1); }
+.nav-cta span { position: relative; z-index: 1; color: inherit; transition: color .35s; }
+.nav-cta:hover span { color: var(--ink); }
+.nav-cta:hover { transform: translateY(-1px); }
 
-/* Dark Skeuo */
-.btn-dark {
-  background: linear-gradient(180deg, #3A3A3A 0%, #0C0C0C 100%);
-  color: var(--white);
-  border: 1px solid #000;
-  box-shadow: 
-    inset 0 2px 2px rgba(255,255,255,0.2), /* Top glare */
-    inset 0 -4px 6px rgba(0,0,0,0.6),      /* Bottom shading */
-    0 8px 16px rgba(0,0,0,0.3),            /* Drop shadow */
-    0 16px 24px rgba(0,0,0,0.1);           /* Soft ambient shadow */
-  text-shadow: 0 -1px 1px rgba(0,0,0,0.8);
-}
-.btn-dark:active {
-  box-shadow: 
-    inset 0 4px 8px rgba(0,0,0,0.8), 
-    inset 0 -1px 1px rgba(255,255,255,0.1), 
-    0 2px 4px rgba(0,0,0,0.2);
-}
+.nav-avail { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(34,197,94,.2); animation: ap 2s infinite; }
+@keyframes ap { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.15)} 50%{box-shadow:0 0 0 8px rgba(34,197,94,.05)} }
 
-/* Yellow Skeuo */
-.btn-yellow {
-  background: linear-gradient(180deg, var(--yellow-l) 0%, var(--yellow-d) 100%);
-  color: var(--black);
-  border: 1px solid #D6A820;
-  box-shadow: 
-    inset 0 2px 3px rgba(255,255,255,0.8), 
-    inset 0 -4px 6px rgba(180, 130, 0, 0.6), 
-    0 8px 16px rgba(245, 200, 66, 0.4),
-    0 16px 24px rgba(245, 200, 66, 0.15);
-  text-shadow: 0 1px 1px rgba(255,255,255,0.6);
-}
-.btn-yellow:active {
-  box-shadow: 
-    inset 0 4px 8px rgba(180, 130, 0, 0.8), 
-    inset 0 -1px 2px rgba(255,255,255,0.5), 
-    0 2px 4px rgba(245, 200, 66, 0.2);
-}
+.nav-mb { display: none; background: none; border: 1.5px solid var(--border); width: 38px; height: 38px; border-radius: 50%; align-items: center; justify-content: center; cursor: none; font-size: .8rem; transition: all .2s; }
+.nav-mb:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* White/Outline Skeuo */
-.btn-outline {
-  background: linear-gradient(180deg, #FFFFFF 0%, #EAEAEA 100%);
-  color: var(--ink);
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 
-    inset 0 2px 2px rgba(255,255,255,1), 
-    inset 0 -4px 6px rgba(0,0,0,0.08), 
-    0 6px 12px rgba(0,0,0,0.08);
-  text-shadow: 0 1px 0 rgba(255,255,255,1);
-}
-.btn-outline:active {
-  box-shadow: 
-    inset 0 4px 8px rgba(0,0,0,0.1), 
-    0 2px 4px rgba(0,0,0,0.05);
-}
+/* Drawer */
+.drawer { position: fixed; inset: 0; z-index: 8900; background: var(--dark-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transform: translateY(-100%); transition: transform .6s cubic-bezier(.77,0,.18,1); }
+.drawer.open { transform: none; }
+.drawer a { font-family: var(--f-disp); font-size: clamp(2rem, 7vw, 4rem); font-weight: 800; color: rgba(255,255,255,.7); transition: color .2s; }
+.drawer a:hover { color: var(--yellow); }
+.drawer-x { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,.08); color: #fff; border: none; cursor: none; width: 42px; height: 42px; border-radius: 50%; font-size: .85rem; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.drawer-x:hover { background: var(--yellow); color: var(--ink); }
 
-/* ════════════════════════════════════════════
-   NEO-BRUTALISM (Tags, Projects)
-════════════════════════════════════════════ */
-.neo-brutal {
-  background: var(--white);
-  border: 3px solid var(--black);
-  box-shadow: 6px 6px 0px var(--black);
-  border-radius: 8px; /* Sharper corners for brutalism */
-  transition: all 0.2s ease;
-}
-.neo-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 10px 10px 0px var(--black);
+/* ══════════════════════════════════════
+   MARQUEE
+══════════════════════════════════════ */
+.mq { overflow: hidden; }
+.mq-t { display: inline-flex; animation: mqs 22s linear infinite; white-space: nowrap; }
+.mq.rv .mq-t { animation-direction: reverse; }
+.mq:hover .mq-t { animation-play-state: paused; }
+@keyframes mqs { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.mi { font-family: var(--f-disp); font-size: clamp(.85rem, 1.8vw, 1.1rem); font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 0 22px; }
+
+/* ══════════════════════════════════════
+   REVEAL ANIMATIONS
+══════════════════════════════════════ */
+.rv    { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv-l   { opacity: 0; transform: translateX(-36px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.rv-l.on { opacity: 1; transform: translateX(0); }
+.rv-s   { opacity: 0; transform: scale(.93); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.rv-s.on { opacity: 1; transform: scale(1); }
+.d1{transition-delay:.08s!important} .d2{transition-delay:.16s!important}
+.d3{transition-delay:.24s!important} .d4{transition-delay:.32s!important}
+.d5{transition-delay:.40s!important} .d6{transition-delay:.48s!important}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  min-height: 100vh; padding-top: 68px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  /* warm gradient bg */
+  background: radial-gradient(ellipse 80% 60% at 70% 30%, rgba(240,165,0,.07) 0%, transparent 65%),
+              radial-gradient(ellipse 60% 80% at 10% 80%, rgba(200,180,140,.12) 0%, transparent 60%),
+              var(--cream);
 }
 
-.hero-cyber-tag {
+/* Subtle grain */
+#hero::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-inner {
+  max-width: 1260px; margin: 0 auto; padding: 48px 48px 60px;
+  display: grid; grid-template-columns: 1fr 340px;
+  gap: 60px; align-items: end;
+  position: relative; z-index: 1;
+}
+
+/* Left: typography */
+.hero-left {}
+.hero-avail {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--black); color: var(--cream);
-  font-size: .75rem; font-weight: 600; letter-spacing: 1px;
-  padding: 10px 18px; font-family: 'Courier New', monospace;
-  align-self: flex-start; animation: fadeIn .6s 1.1s both;
-  /* Neo-brutal touch */
-  border: 2px solid var(--yellow);
-  box-shadow: 4px 4px 0px var(--yellow);
-  border-radius: 0px; 
+  font-size: .7rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 28px; opacity: 0;
+  animation: fadeIn .6s .2s both;
 }
-.hero-cyber-tag span { color: var(--yellow); }
 
-/* ════════════════════════════════════════════
-   NEUMORPHISM (Overview Strip)
-════════════════════════════════════════════ */
-.neumorph-strip {
-  background: var(--bg);
-  padding: 30px 0;
-  position: relative;
-  z-index: 5;
-}
-.neu-card {
-  text-align: center; padding: 28px 20px;
-  border-radius: var(--r);
-  background: var(--bg);
-  /* Soft extrusion */
-  box-shadow:  12px 12px 24px #C7C3BB, -12px -12px 24px #FFFFFF;
-  transition: box-shadow 0.3s ease, transform 0.3s;
-}
-.neu-card:hover {
-  transform: scale(0.98);
-  /* Pressed in state */
-  box-shadow: inset 8px 8px 16px #C7C3BB, inset -8px -8px 16px #FFFFFF;
-}
-.neu-card .ov-num { font-size: 2.6rem; font-weight: 700; letter-spacing: -1px; line-height: 1; color: var(--ink); text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
-.neu-card .ov-num em { color: var(--yellow-d); font-style: normal; }
-.neu-card .ov-lbl { font-size: .7rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
-
-/* ════════════════════════════════════════════
-   GLASSMORPHISM (About Me Section)
-════════════════════════════════════════════ */
-#about {
-  position: relative;
+/* The hero title mixes Syne (bold) + Cormorant (serif italic) */
+.hero-name {
+  margin-bottom: 4px;
   overflow: hidden;
 }
-/* Colorful blurred blobs for glass backdrop */
-.glass-blobs {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+.hn-syne {
+  font-family: var(--f-disp); font-weight: 800;
+  font-size: clamp(4.5rem, 10vw, 9.5rem);
+  letter-spacing: -4px; line-height: .88;
+  color: var(--ink); display: block; overflow: hidden;
 }
-.g-blob {
-  position: absolute; filter: blur(80px); opacity: 0.6; border-radius: 50%;
-  animation: float 10s ease-in-out infinite alternate;
+.hn-syne .hw { display: block; transform: translateY(110%); animation: hup .9s var(--ease) forwards; }
+.hn-syne:nth-child(1) .hw { animation-delay: .35s; }
+.hn-syne:nth-child(2) .hw { animation-delay: .5s; }
+
+/* The Cormorant italic line — exactly like the screenshot */
+.hn-serif {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(3.8rem, 8.5vw, 8.5rem);
+  font-weight: 400; letter-spacing: -2px; line-height: .92;
+  color: var(--ink); display: block; overflow: hidden;
 }
-.g-blob.b1 { width: 400px; height: 400px; background: var(--lav); top: -10%; left: -5%; }
-.g-blob.b2 { width: 300px; height: 300px; background: var(--yellow); bottom: -5%; right: 10%; animation-delay: -3s; }
-.g-blob.b3 { width: 350px; height: 350px; background: var(--mint); top: 30%; left: 40%; animation-delay: -5s; }
-
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--r); padding: 32px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.06), inset 0 2px 2px rgba(255,255,255,0.8);
-  position: relative; z-index: 2;
-  transition: transform 0.3s;
+.hn-serif .hw { display: block; transform: translateY(110%); animation: hup .9s var(--ease) .65s forwards; }
+/* The outlined version */
+.hn-serif-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
 }
-.glass-card:hover { transform: translateY(-5px); }
+.hn-serif-outline .hw { animation-delay: .8s; }
+@keyframes hup { to { transform: translateY(0); } }
 
-/* ════════════════════════════════════════════
-   CLAYMORPHISM (Skills Section)
-════════════════════════════════════════════ */
-.clay-card {
-  border-radius: 36px; /* Extra round for clay look */
-  padding: 32px;
-  position: relative;
-  transition: transform 0.3s ease;
-  /* Double inset shadows for fluffy 3D effect */
-  box-shadow: 
-    12px 12px 24px rgba(0,0,0,0.08),
-    inset -8px -8px 16px rgba(0,0,0,0.1),
-    inset 8px 8px 16px rgba(255,255,255,0.6);
+.hero-desc {
+  font-size: 1rem; line-height: 1.7; color: var(--mid);
+  max-width: 440px; margin-top: 28px; font-weight: 300;
+  opacity: 0; animation: slideUp .7s 1s both;
 }
-.clay-card:hover { transform: scale(1.03); }
-.clay-lav { background: #D9D2FC; }
-.clay-mint { background: #D0F7DF; }
-.clay-coral { background: #FFD5C9; }
-.clay-blue { background: #CDEBFF; }
-.clay-cream { background: #FFF4D6; }
-.clay-yellow { background: #FCE186; }
+.hero-desc strong { color: var(--ink); font-weight: 500; }
+@keyframes slideUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 
-/* ════════════════════════════════════════════
-   MARQUEE
-════════════════════════════════════════════ */
-.marquee-wrap { overflow: hidden; padding: 20px 0; border-top: 2px solid var(--black); border-bottom: 2px solid var(--black); background: var(--bg2); }
-.marquee-track { display: inline-flex; animation: marquee 22s linear infinite; white-space: nowrap; }
-.marquee-wrap.reverse .marquee-track { animation-direction: reverse; }
-.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-.m-item { font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink); padding: 0 24px; text-shadow: 1px 1px 0px rgba(255,255,255,0.5); }
-.m-item.accent { color: var(--yellow); text-shadow: 2px 2px 0px #000; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* ════════════════════════════════════════════
-   UTILITY
-════════════════════════════════════════════ */
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
-.section { padding: 110px 0; }
-.section-tag { display: inline-flex; align-items: center; gap: 10px; font-size: .75rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; text-shadow: 1px 1px 0px rgba(255,255,255,0.6);}
-.section-tag::before { content: ''; width: 24px; height: 3px; background: var(--yellow); border-radius: 2px; box-shadow: 1px 1px 0px #000; }
-.section-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; color: var(--ink); margin-bottom: 56px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-.section-title em { font-style: normal; position: relative; color: var(--yellow-d); }
-.section-title em::after { content: ''; position: absolute; bottom: 4px; left: 0; right: 0; height: 6px; background: var(--black); z-index: -1; transform: rotate(-1deg); }
-
-/* ════════════════════════════════════════════
-   HERO SECTION (Parallax enabled via JS)
-════════════════════════════════════════════ */
-#hero {
-  position: relative; min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding-top: 100px; overflow: hidden;
-}
-#particles-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.hero-inner {
-  position: relative; z-index: 2;
-  max-width: 1280px; margin: 0 auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+.hero-btns {
+  display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap;
+  opacity: 0; animation: slideUp .7s 1.1s both;
 }
 
-.hero-avail { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; padding: 8px 16px; background: rgba(255,255,255,0.5); border-radius: var(--r-pill); box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 4px 10px rgba(0,0,0,0.05); }
-.avail-dot { width: 10px; height: 10px; border-radius: 50%; background: #22C55E; box-shadow: inset 0 -2px 2px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.8), 0 0 0 4px rgba(34,197,94,.2); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { box-shadow: inset 0 -2px 2px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.8), 0 0 0 4px rgba(34,197,94,.15); } 50% { box-shadow: inset 0 -2px 2px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.8), 0 0 0 10px rgba(34,197,94,.06); } }
-
-.hero-name { font-size: clamp(4.5rem, 10vw, 10rem); font-weight: 800; letter-spacing: -4px; line-height: .85; color: var(--ink); overflow: hidden; text-shadow: 4px 4px 12px rgba(0,0,0,0.1); }
-.hero-name .row { overflow: hidden; display: block; }
-.hero-name .row span { display: block; transform: translateY(105%); animation: slideUp .9s cubic-bezier(.77,0,.175,1) forwards; }
-.hero-name .row:nth-child(1) span { animation-delay: .3s; }
-.hero-name .row:nth-child(2) span { animation-delay: .45s; }
-.hero-name .row.yellow-row span { color: var(--yellow); -webkit-text-stroke: 3px var(--black); animation-delay: .6s; text-shadow: 6px 6px 0px var(--black); }
-
-.hero-role { font-size: clamp(.9rem, 1.5vw, 1.1rem); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink); margin-top: 24px; margin-bottom: 28px; animation: fadeIn .6s .9s both; }
-.hero-right { display: flex; flex-direction: column; justify-content: flex-end; gap: 36px; animation: fadeIn .6s 1s both; }
-.hero-desc { font-size: 1.1rem; line-height: 1.8; color: var(--muted); max-width: 420px; text-shadow: 1px 1px 0px rgba(255,255,255,0.6); }
-.hero-desc strong { color: var(--ink); font-weight: 700; }
-.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-
-/* ════════════════════════════════════════════
-   BENTO GRIDS
-════════════════════════════════════════════ */
-.bento { display: grid; gap: 20px; }
-
-/* Overview Grid (Neumorphic) */
-.overview-bento { grid-template-columns: repeat(4, 1fr); max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-
-/* About Grid (Glassmorphism) */
-.about-bento { grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; }
-.about-bento .a1 { grid-column: 1; grid-row: 1 / 3; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
-.about-bento .a2 { grid-column: 2; grid-row: 1; }
-.about-bento .a3 { grid-column: 3; grid-row: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.about-bento .a4 { grid-column: 2; grid-row: 2; }
-.about-bento .a5 { grid-column: 3; grid-row: 2; }
-
-/* Skills Grid (Claymorphism) */
-.skills-bento { grid-template-columns: repeat(3, 1fr); }
-.skill-name { font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 800; letter-spacing: -.5px; margin-bottom: 16px; color: var(--ink); }
-.skill-bar { height: 10px; background: rgba(0,0,0,.1); border-radius: 10px; overflow: hidden; margin-bottom: 8px; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2); }
-.skill-fill { height: 100%; background: linear-gradient(90deg, var(--yellow-l), var(--yellow-d)); border-radius: 10px; width: 0; transition: width 1.4s cubic-bezier(.2,.8,.2,1) .2s; box-shadow: inset 0 2px 2px rgba(255,255,255,0.5); }
-.skill-pct { font-size: .8rem; font-weight: 700; opacity: .6; }
-.clay-card .card-num { font-size: .75rem; font-weight: 700; letter-spacing: 2px; opacity: .4; margin-bottom: 16px; }
-
-/* Projects Grid (Neo-Brutalism) */
-.proj-bento { grid-template-columns: repeat(2, 1fr); }
-.proj-card { padding: 32px; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px; cursor: pointer; }
-.proj-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.proj-tag { font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 6px 14px; border-radius: 0; border: 2px solid var(--black); background: var(--yellow); box-shadow: 2px 2px 0px var(--black); }
-.proj-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -.5px; line-height: 1.1; margin-bottom: 16px; }
-.proj-desc { font-size: .95rem; line-height: 1.7; font-weight: 500; flex: 1; }
-.proj-arrow-btn {
-  width: 50px; height: 50px; border-radius: 50%;
-  border: 3px solid var(--black); background: var(--white);
-  box-shadow: 3px 3px 0px var(--black);
+/* Social pills */
+.hero-socials {
+  display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap;
+  opacity: 0; animation: slideUp .7s 1.2s both;
+}
+.sp {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1.5px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; margin-top: 24px; transition: transform .25s, box-shadow .2s;
-  align-self: flex-start;
+  font-size: .68rem; font-weight: 700; color: var(--mid);
+  transition: all .25s var(--spring); cursor: none;
+  background: var(--white);
 }
-.proj-card:hover .proj-arrow-btn { transform: rotate(-45deg) translate(-2px, -2px); box-shadow: 5px 5px 0px var(--black); }
+.sp:hover {
+  background: var(--ink); color: var(--cream);
+  border-color: var(--ink); transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
 
-/* ════════════════════════════════════════════
-   CERTIFICATIONS (Polymorphic mix)
-════════════════════════════════════════════ */
-.cert-hero {
-  background: var(--black); color: var(--white);
-  padding: 56px; margin-bottom: 20px;
-  display: grid; grid-template-columns: 1fr 240px; gap: 56px; align-items: center;
+/* Right: stats + floating decoration */
+.hero-right {
+  display: flex; flex-direction: column; gap: 20px; padding-bottom: 8px;
+  opacity: 0; animation: slideUp .7s 1s both;
+}
+.hero-stat-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 20px; padding: 24px 28px;
+  transition: transform .35s var(--spring), box-shadow .35s, border-color .25s;
+  position: relative; overflow: hidden; cursor: default;
+}
+.hero-stat-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--yellow); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s var(--ease); z-index: 0;
+}
+.hero-stat-card:hover::before { transform: scaleX(1); }
+.hero-stat-card > * { position: relative; z-index: 1; }
+.hero-stat-card:hover { transform: translateX(-4px); border-color: var(--yellow); box-shadow: 4px 0 0 var(--yellow); }
+.hsc-n { font-family: var(--f-disp); font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1; color: var(--ink); transition: color .2s; }
+.hsc-n em { color: var(--yellow); font-style: normal; transition: color .2s; }
+.hero-stat-card:hover .hsc-n { color: var(--ink); }
+.hero-stat-card:hover .hsc-n em { color: rgba(0,0,0,.4); }
+.hsc-l { font-size: .7rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--mid); margin-top: 4px; transition: color .2s; }
+.hero-stat-card:hover .hsc-l { color: rgba(0,0,0,.5); }
+
+.hero-terminal {
+  background: var(--dark-bg); border-radius: 16px; padding: 18px 22px;
+  font-family: 'Courier New', monospace; font-size: .72rem;
+  line-height: 1.9; color: rgba(255,255,255,.3);
+  transition: transform .35s var(--spring), box-shadow .35s;
+}
+.hero-terminal:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.15); }
+.cmd { color: #22C55E; }
+.out { color: var(--yellow2); }
+
+/* ══════════════════════════════════════
+   TRANSITION MARQUEE
+══════════════════════════════════════ */
+.trans-mq {
+  background: var(--dark-bg); overflow: hidden;
+  padding: 18px 0; border: none;
+}
+.tm-item {
+  font-family: var(--f-serif); font-style: italic; font-weight: 600;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  letter-spacing: -1px; line-height: 1;
+  color: var(--white); padding: 0 32px; white-space: nowrap;
+}
+.tm-dot { color: var(--yellow); margin: 0 8px; font-style: normal; }
+
+/* ══════════════════════════════════════
+   ABOUT (dark section — fixed visibility)
+══════════════════════════════════════ */
+#about {
+  background: linear-gradient(160deg, var(--dark-bg) 0%, var(--dark-2) 50%, var(--dark-3) 100%);
+  padding: 100px 48px;
   position: relative; overflow: hidden;
-  /* Neo-brutalism + Skeuo lighting */
-  border: 4px solid var(--black); box-shadow: 8px 8px 0px var(--yellow), inset 0 20px 40px rgba(255,255,255,0.05);
-  border-radius: 12px;
+  color: rgba(255,255,255,.85);
 }
+/* Subtle warm glow in bg */
+#about::before {
+  content: ''; position: absolute;
+  top: -10%; right: -5%; width: 50%; height: 70%;
+  background: radial-gradient(ellipse, rgba(240,165,0,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+#about::after {
+  content: ''; position: absolute;
+  bottom: -10%; left: 10%; width: 40%; height: 60%;
+  background: radial-gradient(ellipse, rgba(200,160,80,.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.about-grid {
+  max-width: 1260px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 320px 1fr;
+  gap: 64px; align-items: start; position: relative; z-index: 1;
+}
+
+/* Crosshair decorators */
+.ab-ch {
+  position: absolute; width: 36px; height: 36px; opacity: .15;
+  transition: opacity .3s;
+}
+.ab-ch:hover { opacity: .5; }
+.ab-ch svg { width: 100%; height: 100%; }
+.ab-ch-tl { top: 20px; left: 20px; }
+.ab-ch-tr { top: 20px; right: 20px; }
+.ab-ch-bl { bottom: 20px; left: 20px; }
+.ab-ch-br { bottom: 20px; right: 20px; }
+
+.ab-tag { font-size: .65rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--yellow); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+.ab-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--yellow); }
+.ab-h { font-family: var(--f-disp); font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1; color: #fff; margin-bottom: 20px; }
+.ab-h em { font-style: italic; font-family: var(--f-serif); color: var(--yellow2); }
+.ab-p { font-size: .93rem; line-height: 1.8; color: rgba(255,255,255,.55); margin-bottom: 28px; max-width: 360px; }
+
+/* Timeline — now with proper visibility */
+.ab-tl { border-top: 1px solid rgba(255,255,255,.1); }
+.ab-tr {
+  display: grid; grid-template-columns: 90px 1fr; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+  transition: background .25s, padding-left .25s;
+  border-radius: 8px;
+}
+.ab-tr:hover { background: rgba(255,255,255,.03); padding-left: 8px; }
+.ab-yr { font-size: .65rem; font-weight: 700; letter-spacing: 1px; color: var(--yellow); padding-top: 2px; }
+.ab-info h4 { font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.85); margin-bottom: 2px; }
+.ab-info p { font-size: .78rem; color: rgba(255,255,255,.38); line-height: 1.5; }
+
+/* Center: photo card */
+.ab-photo-wrap { position: relative; }
+.ab-photo {
+  width: 100%; aspect-ratio: 3/4.2; border-radius: var(--r);
+  background: linear-gradient(135deg, var(--yellow) 0%, #D4870A 100%);
+  overflow: hidden; position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,.5);
+  transition: transform .6s var(--ease);
+}
+.ab-photo:hover { transform: scale(1.02); }
+.ab-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.ab-photo-fallback { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.ab-photo-fallback i { font-size: 4rem; color: rgba(0,0,0,.25); }
+.ab-photo-fallback span { font-family: var(--f-disp); font-weight: 800; font-size: 1rem; color: rgba(0,0,0,.3); letter-spacing: 3px; text-transform: uppercase; }
+/* Name plate on photo */
+.ab-photo-name {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 100%);
+  padding: 28px 20px 16px;
+  font-family: var(--f-disp); font-size: .85rem; font-weight: 800;
+  color: #fff; letter-spacing: 2px; text-transform: uppercase;
+}
+
+/* Right stats */
+.ab-r { display: flex; flex-direction: column; gap: 0; }
+.ab-stat-row {
+  padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+  transition: padding-left .25s, background .25s; border-radius: 8px;
+}
+.ab-stat-row:first-child { border-top: 1px solid rgba(255,255,255,.07); }
+.ab-stat-row:hover { padding-left: 10px; background: rgba(255,255,255,.025); }
+.abs-n { font-family: var(--f-disp); font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 800; letter-spacing: -2px; line-height: 1; color: #fff; }
+.abs-n em { color: var(--yellow); font-style: normal; }
+.abs-l { font-size: .67rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: 4px; }
+
+/* ══════════════════════════════════════
+   SKILLS
+══════════════════════════════════════ */
+#skills {
+  padding: 100px 48px;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream2) 100%);
+}
+.skills-inner { max-width: 1260px; margin: 0 auto; }
+.sec-tag { font-size: .65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.sec-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--yellow); }
+.sec-title { font-family: var(--f-disp); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -2px; line-height: 1; color: var(--ink); margin-bottom: 52px; }
+.sec-title em { font-style: italic; font-family: var(--f-serif); color: var(--yellow); font-size: 1.1em; }
+
+.sk-list { border-top: 1px solid var(--border); }
+.sk-row {
+  display: grid; grid-template-columns: 52px 1fr 160px 56px;
+  gap: 24px; align-items: center;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden; cursor: default;
+  transition: padding-left .3s var(--ease);
+}
+.sk-row::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: var(--yellow);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .5s var(--ease);
+}
+.sk-row:hover { padding-left: 12px; }
+.sk-row:hover::before { clip-path: inset(0 0% 0 0); }
+.sk-row > * { position: relative; z-index: 1; }
+.sk-i { font-size: .62rem; font-weight: 700; letter-spacing: 2px; color: rgba(0,0,0,.2); transition: color .3s; }
+.sk-n { font-family: var(--f-disp); font-size: clamp(1.3rem, 2.8vw, 2rem); font-weight: 800; letter-spacing: -.5px; color: var(--ink); transition: color .3s; }
+.sk-bar { height: 2px; background: rgba(0,0,0,.08); border-radius: 2px; overflow: hidden; }
+.sk-fill { height: 100%; background: var(--ink); border-radius: 2px; width: 0; transition: width 1.4s var(--ease), background .3s; }
+.sk-pct { font-size: .72rem; font-weight: 600; color: var(--mid); text-align: right; transition: color .3s; }
+.sk-row:hover .sk-i, .sk-row:hover .sk-n, .sk-row:hover .sk-pct { color: rgba(0,0,0,.55); }
+.sk-row:hover .sk-fill { background: rgba(0,0,0,.5); }
+.sk-row:hover .sk-bar { background: rgba(0,0,0,.15); }
+
+/* ══════════════════════════════════════
+   CERTIFICATIONS
+══════════════════════════════════════ */
+#certifications {
+  padding: 100px 48px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.cert-inner { max-width: 1260px; margin: 0 auto; }
+
+.cert-hero {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-2) 40%, #1E1A12 100%);
+  border-radius: var(--r2); padding: 56px; margin-bottom: 14px;
+  display: grid; grid-template-columns: 1fr 190px;
+  gap: 48px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,.15);
+  transition: transform .4s var(--spring);
+}
+.cert-hero:hover { transform: translateY(-4px); }
+/* Watermark */
+.cert-wm {
+  position: absolute; right: -10px; bottom: -30px;
+  font-family: var(--f-serif); font-style: italic; font-weight: 600;
+  font-size: 8rem; color: rgba(255,255,255,.03); user-select: none; pointer-events: none; white-space: nowrap;
+}
+/* Corner glow */
 .cert-hero::after {
-  content: 'NEW'; position: absolute; top: 32px; right: 56px;
-  font-size: .7rem; font-weight: 800; letter-spacing: 3px;
-  background: var(--yellow); color: var(--black);
-  padding: 6px 16px; border: 2px solid var(--black); box-shadow: 3px 3px 0px var(--black);
+  content: ''; position: absolute; top: -40%; right: -10%; width: 40%; height: 80%;
+  background: radial-gradient(ellipse, rgba(240,165,0,.1) 0%, transparent 70%);
+  pointer-events: none;
 }
-.cert-hero-watermark { position: absolute; right: -20px; bottom: -40px; font-size: 10rem; font-weight: 800; letter-spacing: 5px; color: rgba(255,255,255,.02); pointer-events: none; white-space: nowrap; user-select: none; }
-.cert-new-tag { font-size: .7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--yellow); margin-bottom: 16px; display: block; text-shadow: 0 0 10px rgba(245, 200, 66, 0.4); }
-.cert-hero-title { font-size: clamp(2.6rem, 5.5vw, 5.5rem); font-weight: 800; letter-spacing: -2px; line-height: .92; margin-bottom: 12px; }
-.cert-hero-title em { color: var(--yellow); font-style: normal; display: block; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-.cert-hero-sub { font-size: .8rem; font-weight: 600; letter-spacing: 1px; opacity: .5; margin-bottom: 32px; }
-.cert-bullets { list-style: none; margin-bottom: 40px; }
-.cert-bullets li { font-size: .95rem; opacity: .8; padding: 10px 0; border-bottom: 1px dashed rgba(255,255,255,.15); display: flex; align-items: center; gap: 16px; font-weight: 500; }
-.cert-bullets li::before { content: '✓'; color: var(--black); background: var(--yellow); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .6rem; font-weight: 800; }
-.cert-badge-box {
-  background: linear-gradient(145deg, #1A1A1A, #050505);
-  border: 1px solid rgba(255,255,255,.1); border-radius: var(--r);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
-  padding: 40px 28px; text-align: center;
-  box-shadow: inset 0 2px 10px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.4);
+.cf-new { font-size: .62rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--yellow); border: 1px solid rgba(240,165,0,.3); padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+.cf-t { font-family: var(--f-disp); font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 800; letter-spacing: -2px; line-height: .9; color: #fff; margin-bottom: 10px; }
+.cf-t em { font-style: italic; font-family: var(--f-serif); color: var(--yellow2); }
+.cf-sub { font-size: .7rem; letter-spacing: 1px; color: rgba(255,255,255,.28); margin-bottom: 24px; }
+.cf-ul { list-style: none; margin-bottom: 28px; }
+.cf-ul li { font-size: .88rem; color: rgba(255,255,255,.5); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; align-items: center; gap: 12px; transition: color .2s; }
+.cf-ul li:hover { color: rgba(255,255,255,.8); }
+.cf-ul li::before { content: '→'; color: var(--yellow); flex-shrink: 0; }
+.cf-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.cf-badge { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; transition: border-color .3s; }
+.cert-hero:hover .cf-badge { border-color: rgba(240,165,0,.3); }
+.cf-badge i { font-size: 2.6rem; color: var(--yellow); }
+.cf-dur { font-family: var(--f-disp); font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
+.cf-durl { font-size: .58rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.25); }
+.cf-id { font-size: .55rem; letter-spacing: 2px; color: rgba(240,165,0,.28); margin-top: 8px; }
+
+/* Cert grid */
+.cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cc {
+  border-radius: var(--r); padding: 28px; min-height: 210px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  cursor: none; transition: transform .35s var(--spring), box-shadow .35s;
+  position: relative; overflow: hidden;
 }
-.cert-dur { font-size: 2.8rem; font-weight: 800; color: var(--yellow); line-height: 1; text-shadow: 0 2px 10px rgba(245, 200, 66, 0.3); }
+.cc:hover { transform: translateY(-8px) rotate(-.4deg); box-shadow: 0 20px 50px rgba(0,0,0,.1); }
+.cc::before { content: ''; position: absolute; inset: 0; z-index: 0; }
+.cc > * { position: relative; z-index: 1; }
+.cc-num { font-size: .6rem; font-weight: 700; letter-spacing: 2px; opacity: .3; margin-bottom: 12px; }
+.cc-t { font-family: var(--f-disp); font-size: 1.25rem; font-weight: 800; letter-spacing: -.3px; line-height: 1.1; margin-bottom: 8px; }
+.cc-b { font-size: .8rem; opacity: .6; line-height: 1.55; flex: 1; }
+.cc-foot { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.cc-y { background: #FFF0C5; } .cc-y .cc-t { color: #7A5000; }
+.cc-lv { background: #EBE7FF; } .cc-lv .cc-t { color: #3D2A90; }
+.cc-mt { background: #DAFAE8; } .cc-mt .cc-t { color: #1A5C35; }
+.cc-dk { background: var(--dark-bg); } .cc-dk .cc-t { color: var(--yellow2); } .cc-dk .cc-b { color: rgba(255,255,255,.4); } .cc-dk .cc-num { color: rgba(255,255,255,.2); }
 
-/* ════════════════════════════════════════════
-   CONTACT (Polymorphic)
-════════════════════════════════════════════ */
-.contact-bento { grid-template-columns: 3fr 2fr; }
-.ct-main { background: linear-gradient(135deg, var(--yellow-l), var(--yellow-d)); border-radius: var(--r); padding: 56px; display: flex; flex-direction: column; justify-content: space-between; min-height: 520px; box-shadow: inset 0 4px 10px rgba(255,255,255,0.6), 0 16px 32px rgba(245, 200, 66, 0.2); border: 1px solid #D6A820; }
-.ct-title { font-size: clamp(3rem, 6vw, 6rem); font-weight: 800; letter-spacing: -3px; line-height: .9; color: var(--black); margin-bottom: 24px; text-shadow: 2px 2px 0 rgba(255,255,255,0.5); }
-.ct-sub { font-size: 1.05rem; font-weight: 600; color: rgba(0,0,0,.7); line-height: 1.7; max-width: 400px; margin-bottom: 40px; }
-.ct-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 2px solid rgba(0,0,0,.1); cursor: pointer; transition: padding-left .25s, background 0.2s; font-weight: 700; }
-.ct-link:first-child { border-top: 2px solid rgba(0,0,0,.1); }
-.ct-link:hover { padding-left: 16px; background: rgba(255,255,255,0.2); }
-.ct-form-card { background: var(--white); border-radius: var(--r); padding: 48px; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-.form-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -.5px; margin-bottom: 32px; }
-.ff { border-bottom: 2px solid var(--bg2); padding: 16px 0; }
-.ff:first-of-type { border-top: 2px solid var(--bg2); }
-.ff label { font-size: .65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
-.ff input, .ff textarea { width: 100%; background: transparent; border: none; outline: none; color: var(--ink); font-family: var(--font); font-size: 1rem; font-weight: 600; resize: none; }
-.ff input::placeholder, .ff textarea::placeholder { color: var(--muted); opacity: 0.5; font-weight: 500; }
+/* ══════════════════════════════════════
+   PROJECTS
+══════════════════════════════════════ */
+#projects {
+  padding: 100px 48px;
+  background: linear-gradient(180deg, var(--cream2) 0%, #E8E2D8 100%);
+}
+.proj-inner { max-width: 1260px; margin: 0 auto; }
+.proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.pc {
+  border-radius: var(--r2); padding: 40px; min-height: 290px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  cursor: none; transition: transform .35s var(--spring), box-shadow .35s;
+  position: relative; overflow: hidden;
+}
+/* Hover tilt */
+.pc:hover { transform: translateY(-6px) rotate(.2deg); box-shadow: 0 24px 60px rgba(0,0,0,.12); }
+/* Corner number watermark */
+.pc::after {
+  content: attr(data-num); position: absolute; bottom: -10px; right: 8px;
+  font-family: var(--f-disp); font-size: 5rem; font-weight: 800;
+  color: rgba(0,0,0,.04); pointer-events: none; line-height: 1;
+}
+.pc.dark::after { color: rgba(255,255,255,.04); }
+.pc-num { font-size: .62rem; font-weight: 700; letter-spacing: 2px; opacity: .3; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.pc-num::after { content: ''; flex: 1; max-width: 32px; height: 1px; background: currentColor; opacity: .2; }
+.pc-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.pc-tag {
+  font-size: .6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 100px; border: 1.5px solid rgba(0,0,0,.12);
+  transition: background .2s, border-color .2s;
+}
+.pc:hover .pc-tag { border-color: rgba(0,0,0,.2); }
+.dark .pc-tag { border-color: rgba(255,255,255,.15); color: rgba(255,255,255,.5); }
+.pc-t { font-family: var(--f-disp); font-size: clamp(1.5rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: -1px; line-height: 1; margin-bottom: 10px; }
+.pc-d { font-size: .87rem; line-height: 1.7; opacity: .6; flex: 1; }
+.pc-arrow {
+  width: 44px; height: 44px; border-radius: 50%; border: 2px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  opacity: .25; transition: opacity .25s, transform .35s var(--spring);
+  align-self: flex-start; margin-top: 20px; font-size: .9rem;
+}
+.pc:hover .pc-arrow { opacity: 1; transform: rotate(45deg); }
+.pc-dark { background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-2) 100%); color: #fff; }
+.pc-yellow { background: var(--yellow); }
+.pc-blue { background: #D8EEFF; }
+.pc-peach { background: #FFE8DC; }
 
-/* ════════════════════════════════════════════
-   DECORATIVE
-════════════════════════════════════════════ */
-.terminal-snip { background: var(--black); color: #22C55E; font-size: .75rem; font-family: 'Courier New', monospace; padding: 14px 20px; border-radius: 8px; display: inline-block; letter-spacing: .5px; margin-top: 16px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.8), 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #333; }
-.terminal-snip .cmd { color: var(--yellow); }
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+#contact {
+  padding: 100px 48px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.ct-inner { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; }
+.ct-t {
+  font-family: var(--f-disp); font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 800; letter-spacing: -3px; line-height: .88; margin-bottom: 20px;
+}
+.ct-t .italic-line { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: var(--yellow); display: block; font-size: 1.05em; }
+.ct-desc { font-size: .92rem; color: var(--mid); line-height: 1.75; max-width: 360px; margin-bottom: 36px; }
 
-/* ════════════════════════════════════════════
-   FOOTER (Liquid shape)
-════════════════════════════════════════════ */
+.ct-links {}
+.ct-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  cursor: none; transition: padding-left .3s var(--ease), background .25s;
+  border-radius: 8px;
+}
+.ct-link:first-child { border-top: 1px solid var(--border); }
+.ct-link:hover { padding-left: 12px; background: rgba(240,165,0,.04); }
+.ct-ll { font-size: .62rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C4BFBA; }
+.ct-lv { font-size: .9rem; font-weight: 500; color: var(--ink); transition: color .2s; }
+.ct-link:hover .ct-lv { color: var(--yellow); }
+.ct-li { font-size: .75rem; color: #D4CDBC; transition: all .2s; }
+.ct-link:hover .ct-li { color: var(--yellow); transform: translate(3px,-3px); }
+
+.ct-form-wrap { background: var(--cream); border: 1px solid var(--border); border-radius: var(--r2); padding: 44px; transition: box-shadow .35s; }
+.ct-form-wrap:hover { box-shadow: 0 12px 48px rgba(0,0,0,.06); }
+.ct-form-title { font-family: var(--f-disp); font-size: 1.5rem; font-weight: 800; letter-spacing: -.5px; margin-bottom: 26px; }
+.ff { border-bottom: 1px solid var(--border); padding: 13px 0; transition: border-color .2s; }
+.ff:first-of-type { border-top: 1px solid var(--border); }
+.ff:focus-within { border-color: var(--yellow); }
+.ff label { font-size: .58rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C4BFBA; display: block; margin-bottom: 5px; transition: color .2s; }
+.ff:focus-within label { color: var(--yellow); }
+.ff input, .ff textarea { width: 100%; background: transparent; border: none; outline: none; color: var(--ink); font-family: var(--f-body); font-size: .9rem; resize: none; cursor: none; }
+.ff textarea { min-height: 64px; }
+.ff input::placeholder, .ff textarea::placeholder { color: #D4CDBC; }
+.fsub { margin-top: 20px; }
+
+/* ══════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════ */
+.btn {
+  font-family: var(--f-disp); font-size: .72rem; font-weight: 700; letter-spacing: .5px;
+  padding: 12px 24px; border-radius: 100px; cursor: none;
+  display: inline-flex; align-items: center; gap: 8px; border: 2px solid transparent;
+  transition: transform .25s var(--spring), box-shadow .25s;
+  position: relative; overflow: hidden;
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  transition: transform .35s var(--ease); transform: scaleX(0); transform-origin: left;
+}
+.btn span, .btn i { position: relative; z-index: 1; }
+.btn:hover { transform: translateY(-2px); }
+
+.btn-dark { background: var(--ink); color: #fff; }
+.btn-dark::before { background: var(--yellow); }
+.btn-dark:hover::before { transform: scaleX(1); }
+.btn-dark:hover { color: var(--ink); box-shadow: 0 8px 24px rgba(240,165,0,.3); }
+
+.btn-out { background: transparent; color: var(--ink); border-color: var(--border); }
+.btn-out::before { background: var(--ink); }
+.btn-out:hover::before { transform: scaleX(1); }
+.btn-out:hover { color: #fff; border-color: var(--ink); }
+
+.btn-yellow { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.btn-yellow:hover { box-shadow: 0 8px 24px rgba(240,165,0,.4); transform: translateY(-3px); }
+
+.btn-out-w { background: transparent; color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.15); }
+.btn-out-w::before { background: rgba(255,255,255,.08); }
+.btn-out-w:hover::before { transform: scaleX(1); }
+.btn-out-w:hover { color: #fff; }
+
+.btn-sm { padding: 8px 18px; font-size: .65rem; }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
 .footer {
-  background: var(--black); margin: 0 24px 24px;
-  border-radius: 40px 40px 20px 20px;
-  padding: 48px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  background: var(--dark-bg); margin: 0 24px 24px; border-radius: 20px;
+  padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
 }
-.f-logo { font-size: 1.3rem; font-weight: 800; color: var(--white); }
-.f-logo em { color: var(--yellow); font-style: normal; }
-.f-copy { font-size: .75rem; font-weight: 600; color: rgba(255,255,255,.4); letter-spacing: 1px; }
-.f-links { display: flex; gap: 12px; flex-wrap: wrap; }
-.f-links a {
-  font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-  color: var(--black); background: var(--yellow); padding: 10px 20px; border-radius: var(--r-pill);
-  box-shadow: inset 0 2px 2px rgba(255,255,255,0.6), 0 4px 8px rgba(0,0,0,0.3);
-  transition: all .2s;
+.f-logo { font-family: var(--f-disp); font-size: 1rem; font-weight: 800; color: #fff; }
+.f-logo em { font-style: italic; font-family: var(--f-serif); color: var(--yellow2); }
+.f-copy { font-size: .62rem; color: rgba(255,255,255,.25); letter-spacing: 1px; font-weight: 500; }
+.f-soc { display: flex; gap: 8px; }
+.f-soc a { font-size: .62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.35); padding: 7px 14px; border-radius: 100px; border: 1px solid rgba(255,255,255,.1); transition: all .2s; }
+.f-soc a:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+.ov { position: fixed; inset: 0; z-index: 50000; background: rgba(12,11,9,.65); backdrop-filter: blur(16px); opacity: 0; pointer-events: none; transition: opacity .35s; display: flex; align-items: center; justify-content: center; }
+.ov.on { opacity: 1; pointer-events: all; }
+.modal { background: var(--white); border-radius: var(--r2); max-width: 520px; width: 90%; padding: 44px; transform: translateY(16px) scale(.96); transition: transform .45s var(--spring); box-shadow: 0 40px 100px rgba(0,0,0,.25); }
+.ov.on .modal { transform: none; }
+.mhd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.mhd h3 { font-family: var(--f-disp); font-size: 1.5rem; font-weight: 800; letter-spacing: -.5px; }
+.mx { background: var(--cream2); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: none; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: var(--mid); transition: all .2s; }
+.mx:hover { background: var(--ink); color: #fff; }
+.mbd { font-size: .9rem; color: var(--mid); line-height: 1.8; }
+.mbd strong { color: var(--ink); }
+
+/* ══════════════════════════════════════
+   BOTTOM MARQUEE SEPARATOR
+══════════════════════════════════════ */
+.sep-mq {
+  padding: 13px 0; overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
 }
-.f-links a:hover { transform: translateY(-2px); box-shadow: inset 0 2px 2px rgba(255,255,255,0.8), 0 8px 16px rgba(245,200,66,0.3); }
 
-/* ════════════════════════════════════════════
-   ANIMATIONS & MODAL
-════════════════════════════════════════════ */
-@keyframes slideUp { to { transform: translateY(0); } }
-@keyframes fadeIn  { to { opacity: 1; } }
-@keyframes float { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-30px) scale(1.05); } }
-
-.overlay { position: fixed; inset: 0; z-index: 50000; background: rgba(0,0,0,.7); backdrop-filter: blur(16px); opacity: 0; pointer-events: none; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
-.overlay.on { opacity: 1; pointer-events: all; }
-.modal { background: var(--bg); border-radius: var(--r); border: 2px solid var(--white); box-shadow: 0 40px 100px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8); max-width: 580px; width: 90%; padding: 48px; transform: translateY(20px) scale(.95); transition: transform .4s cubic-bezier(.175,.885,.32,1.275); }
-.overlay.on .modal { transform: none; }
-.modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid var(--bg2); }
-.modal-head h3 { font-size: 1.8rem; font-weight: 800; letter-spacing: -.5px; }
-.modal-close { background: var(--white); border: 1px solid rgba(0,0,0,0.1); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; color: var(--ink); font-size: 1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: all .2s; }
-.modal-close:hover { background: var(--black); color: var(--white); transform: scale(1.05); }
-.modal-body { font-size: 1rem; color: var(--muted); line-height: 1.8; font-weight: 500; }
-.modal-body strong { color: var(--ink); font-weight: 700; }
-
-/* ════════════════════════════════════════════
+/* ══════════════════════════════════════
    RESPONSIVE
-════════════════════════════════════════════ */
-@media (max-width: 1024px) {
+══════════════════════════════════════ */
+@media(max-width:1100px){
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-  .about-bento { grid-template-columns: 1fr 1fr; }
-  .about-bento .a1 { grid-column: span 2; grid-row: auto; min-height: auto; }
-  .about-bento .a2,.about-bento .a3,.about-bento .a4,.about-bento .a5 { grid-column: auto; grid-row: auto; }
-  .overview-bento { grid-template-columns: repeat(2, 1fr); gap: 16px;}
+  .hero-right { flex-direction: row; flex-wrap: wrap; }
+  .hero-stat-card { flex: 1; min-width: 160px; }
+  .about-grid { grid-template-columns: 1fr 280px; }
+  .about-grid .ab-r { display: none; }
   .cert-hero { grid-template-columns: 1fr; }
-  .cert-badge-box { display: none; }
-  .contact-bento { grid-template-columns: 1fr; }
+  .cf-badge { display: none; }
+  .ct-inner { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: repeat(2,1fr); }
 }
-@media (max-width: 768px) {
-  .nav { width: calc(100% - 24px); top: 10px; animation: none; border-radius: var(--r-pill); }
-  .nav-links, .nav-btn { display: none; }
-  .skills-bento, .proj-bento { grid-template-columns: 1fr; }
-  .about-bento { grid-template-columns: 1fr; }
-  .about-bento .a1,.about-bento .a2,.about-bento .a3,.about-bento .a4,.about-bento .a5 { grid-column: span 1; }
-  .cert-hero { padding: 40px 24px; border-width: 3px; box-shadow: 5px 5px 0px var(--yellow); }
-  .cert-hero::after { top: 16px; right: 24px; }
-  .ct-main, .ct-form-card { padding: 40px 24px; }
-  .footer { margin: 0 16px 16px; padding: 36px 24px; flex-direction: column; align-items: flex-start; border-radius: 24px; }
-  #cursor { display: none; }
+@media(max-width:860px){
+  .nav { padding: 0 20px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-mb { display: flex; }
+  #skills, #certifications, #projects, #contact, #about { padding: 72px 20px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr; }
+  .footer { margin: 0 16px 16px; padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+  .hero-inner { padding: 32px 20px 44px; }
+  .sk-row { grid-template-columns: 36px 1fr 80px 40px; gap: 12px; }
+}
+@media(max-width:500px){
+  .hero-right { flex-direction: column; }
+  #cur-dot, #cur-ring { display: none; }
   body { cursor: auto; }
+  .btn { cursor: pointer; }
+  .ff input, .ff textarea { cursor: text; }
 }
 </style>
 </head>
 <body>
 
-<!-- Cursor -->
-<div id="cursor"></div>
+<!-- Scroll progress -->
+<div id="progress"></div>
 
-<!-- NAV (Liquid Glass morphing) -->
+<!-- Cursor (two-part) -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- ─── LOADER ─── -->
+<div id="ldr">
+  <div class="ldr-line"><div class="ldr-word">NITIN</div></div>
+  <div class="ldr-line"><div class="ldr-word">RAJ</div></div>
+  <div class="ldr-mono">Initializing...</div>
+  <div class="ldr-bar"><div class="ldr-fill"></div></div>
+</div>
+
+<!-- ─── NAV ─── -->
 <nav class="nav" id="nav">
-  <div class="nav-logo"><div class="nav-dot"></div>Nitin Raj</div>
+  <div class="nav-logo">
+    <div class="nav-logo-mark"></div>
+    Nitin Raj
+  </div>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
@@ -541,499 +803,431 @@ img { display: block; max-width: 100%; }
     <a href="#projects">Labs</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="https://wa.me/917277839446" target="_blank" class="btn btn-dark" style="padding: 10px 20px; font-size: 0.7rem;">
-    <i class="fab fa-whatsapp"></i> Hire Me
-  </a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--mid)"><div class="nav-avail"></div>Open to work</div>
+    <a href="https://wa.me/917277839446" target="_blank" class="nav-cta"><span><i class="fab fa-whatsapp"></i> Hire Me</span></a>
+  </div>
+  <button class="nav-mb" id="mbBtn"><i class="fas fa-bars"></i></button>
 </nav>
 
-<!-- ══════════ HERO (Parallax) ══════════ -->
+<!-- Drawer -->
+<div class="drawer" id="drawer">
+  <button class="drawer-x" id="drawerX"><i class="fas fa-times"></i></button>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#certifications">Certs</a>
+  <a href="#projects">Labs</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
 <section id="hero">
-  <canvas id="particles-canvas" class="parallax" data-speed="0.3"></canvas>
   <div class="hero-inner">
-    <div class="hero-left parallax" data-speed="0.1">
-      <div class="hero-avail"><span class="avail-dot"></span>Available for Internships · Galgotias University</div>
-      <h1 class="hero-name">
-        <span class="row"><span>NITIN</span></span>
-        <span class="row"><span>RAJ</span></span>
-        <span class="row yellow-row"><span>PENTESTER</span></span>
-      </h1>
-      <div class="hero-role">Jr Penetration Tester · Red Team Aspirant</div>
-      <!-- Neo-brutal tag -->
-      <div class="hero-cyber-tag neo-brutal"><span>$</span> nmap -sV --script vuln target.com</div>
-    </div>
-    <div class="hero-right parallax" data-speed="0.15">
+    <!-- Left: the big type -->
+    <div class="hero-left">
+      <div class="hero-avail"><span class="nav-avail" style="width:6px;height:6px"></span> &nbsp;Available for Internships</div>
+
+      <div class="hero-name">
+        <!-- Syne bold: NITIN -->
+        <span class="hn-syne"><span class="hw">NITIN</span></span>
+        <!-- Syne bold: RAJ -->
+        <span class="hn-syne"><span class="hw">RAJ</span></span>
+        <!-- Cormorant italic: Penetration -->
+        <span class="hn-serif"><span class="hw">Penetration</span></span>
+        <!-- Cormorant italic outline: Tester -->
+        <span class="hn-serif hn-serif-outline"><span class="hw">Tester.</span></span>
+      </div>
+
       <p class="hero-desc">
-        <strong>Offensive security enthusiast</strong> with hands-on TryHackMe experience. Ranked in top 4% globally. Building real skills through labs, CTFs, and continuous practice.
+        <strong>Jr Penetration Tester</strong> certified · Offensive security enthusiast · Top 4% globally on TryHackMe.
       </p>
+
       <div class="hero-btns">
-        <!-- Skeuomorphic Buttons -->
-        <a href="#projects" class="btn btn-dark">View Projects</a>
-        <a href="#certifications" class="btn btn-outline">View Certifications</a>
+        <a href="#projects" class="btn btn-dark"><span>View Projects</span></a>
+        <a href="#certifications" class="btn btn-out"><span>Certifications</span></a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://github.com/nitinraj007" target="_blank" class="sp">GH</a>
+        <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank" class="sp">LI</a>
+        <a href="https://www.instagram.com/nitin.007_/" target="_blank" class="sp">IG</a>
+        <a href="https://x.com/NitinRaj24693" target="_blank" class="sp">TW</a>
+        <a href="https://www.youtube.com/@TrendHiveAcademy" target="_blank" class="sp">YT</a>
+      </div>
+    </div>
+
+    <!-- Right: animated stat cards + terminal -->
+    <div class="hero-right">
+      <div class="hero-stat-card">
+        <div class="hsc-n">TOP<em>4%</em></div>
+        <div class="hsc-l">TryHackMe Global</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hsc-n"><em>5</em></div>
+        <div class="hsc-l">Certifications</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hsc-n">30<em>H</em></div>
+        <div class="hsc-l">Jr Pen Tester Path</div>
+      </div>
+      <div class="hero-terminal">
+        <div><span class="cmd">$ whoami</span></div>
+        <div class="out">nitin_raj → jr_pentester</div>
+        <div style="margin-top:4px"><span class="cmd">$ uname</span></div>
+        <div class="out">TryHackMe · Top 4%</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NEUMORPHISM: Overview strip -->
-<div class="neumorph-strip">
-  <div class="container bento overview-bento">
-    <div class="neu-card"><div class="ov-num">TOP <em>4%</em></div><div class="ov-lbl">TryHackMe Global</div></div>
-    <div class="neu-card"><div class="ov-num"><em>50+</em></div><div class="ov-lbl">Labs Completed</div></div>
-    <div class="neu-card"><div class="ov-num"><em>5</em></div><div class="ov-lbl">Certifications</div></div>
-    <div class="neu-card"><div class="ov-num">30<em>H</em></div><div class="ov-lbl">Jr Pen Tester Path</div></div>
+<!-- ══════════ TRANSITION MARQUEE ══════════ -->
+<div class="trans-mq">
+  <div class="mq">
+    <div class="mq-t">
+      <span class="tm-item">pentesting<span class="tm-dot">.</span></span>
+      <span class="tm-item">enumeration<span class="tm-dot">.</span></span>
+      <span class="tm-item">exploitation<span class="tm-dot">.</span></span>
+      <span class="tm-item">reporting<span class="tm-dot">.</span></span>
+      <span class="tm-item">red team<span class="tm-dot">.</span></span>
+      <span class="tm-item">pentesting<span class="tm-dot">.</span></span>
+      <span class="tm-item">enumeration<span class="tm-dot">.</span></span>
+      <span class="tm-item">exploitation<span class="tm-dot">.</span></span>
+      <span class="tm-item">reporting<span class="tm-dot">.</span></span>
+      <span class="tm-item">red team<span class="tm-dot">.</span></span>
+    </div>
   </div>
 </div>
 
-<!-- MARQUEE 1 (Neo-Brutal styling inside) -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="m-item">Penetration Tester</span><span class="m-item accent">✦</span>
-    <span class="m-item">Red Team Aspirant</span><span class="m-item accent">✦</span>
-    <span class="m-item">Offensive Security</span><span class="m-item accent">✦</span>
-    <span class="m-item">CTF Enthusiast</span><span class="m-item accent">✦</span>
-    <span class="m-item">Network Defence</span><span class="m-item accent">✦</span>
-    <span class="m-item">TryHackMe Top 4%</span><span class="m-item accent">✦</span>
-    <span class="m-item">Jr Pen Tester Certified</span><span class="m-item accent">✦</span>
-    <span class="m-item">Penetration Tester</span><span class="m-item accent">✦</span>
-    <span class="m-item">Red Team Aspirant</span><span class="m-item accent">✦</span>
-    <span class="m-item">Offensive Security</span><span class="m-item accent">✦</span>
-  </div>
-</div>
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <!-- Crosshairs -->
+  <div class="ab-ch ab-ch-tl"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="9" stroke="white" stroke-width="1.2"/><line x1="18" y1="0" x2="18" y2="36" stroke="white" stroke-width="1.2"/><line x1="0" y1="18" x2="36" y2="18" stroke="white" stroke-width="1.2"/></svg></div>
+  <div class="ab-ch ab-ch-tr"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="9" stroke="white" stroke-width="1.2"/><line x1="18" y1="0" x2="18" y2="36" stroke="white" stroke-width="1.2"/><line x1="0" y1="18" x2="36" y2="18" stroke="white" stroke-width="1.2"/></svg></div>
+  <div class="ab-ch ab-ch-bl"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="9" stroke="white" stroke-width="1.2"/><line x1="18" y1="0" x2="18" y2="36" stroke="white" stroke-width="1.2"/><line x1="0" y1="18" x2="36" y2="18" stroke="white" stroke-width="1.2"/></svg></div>
+  <div class="ab-ch ab-ch-br"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="9" stroke="white" stroke-width="1.2"/><line x1="18" y1="0" x2="18" y2="36" stroke="white" stroke-width="1.2"/><line x1="0" y1="18" x2="36" y2="18" stroke="white" stroke-width="1.2"/></svg></div>
 
-<!-- ══════════ ABOUT (Glassmorphism) ══════════ -->
-<section id="about" class="section">
-  <!-- Animated liquid glass background blobs -->
-  <div class="glass-blobs">
-    <div class="g-blob b1 parallax" data-speed="0.4"></div>
-    <div class="g-blob b2 parallax" data-speed="0.2"></div>
-    <div class="g-blob b3 parallax" data-speed="0.6"></div>
-  </div>
+  <div class="about-grid">
+    <!-- Bio -->
+    <div class="rv">
+      <div class="ab-tag">01 — Who I Am</div>
+      <h2 class="ab-h">Built for<br><em>the offensive.</em></h2>
+      <p class="ab-p">Cyber Security student at Galgotias University. From Gaya, Bihar — I live in the terminal, not textbooks. Real labs, real tools, real mindset.</p>
+      <p class="ab-p" style="margin-bottom:32px">Seeking internships in penetration testing or SOC analysis where I can grow under real-world pressure.</p>
 
-  <div class="container">
-    <div class="section-tag" data-aos="fade-up">01 — Identity</div>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">About <em>Me</em></h2>
-
-    <div class="bento about-bento">
-      <div class="glass-card a1" data-aos="fade-up">
-        <div>
-          <div class="card-label" style="font-size:.7rem;font-weight:700;opacity:0.6;margin-bottom:16px;text-transform:uppercase;">Who I am</div>
-          <p style="font-size:1.1rem;line-height:1.75;color:var(--ink);font-weight:600;margin-bottom:20px; text-shadow: 1px 1px 0 rgba(255,255,255,0.8);">
-            I'm a <strong style="color:var(--black); font-weight:800;">Cyber Security student at Galgotias University</strong> who genuinely enjoys breaking things to understand how they work. From Gaya, Bihar — I've spent hundreds of hours in the terminal running real attacks on TryHackMe labs.
-          </p>
-          <p style="font-size:1rem;line-height:1.7;color:var(--muted); font-weight:500;">
-            My focus is offensive security — web application pentesting, network enumeration, and privilege escalation. Actively seeking internships where I can grow under real-world conditions.
-          </p>
+      <div class="ab-tl">
+        <div class="ab-tr">
+          <div class="ab-yr">Now</div>
+          <div class="ab-info"><h4>Galgotias University</h4><p>BCA · Cyber Security · Greater Noida</p></div>
         </div>
-        <div>
-          <div class="terminal-snip"><span class="cmd">$ whoami</span><br>nitin_raj → pentester in training</div>
+        <div class="ab-tr">
+          <div class="ab-yr">2024</div>
+          <div class="ab-info"><h4>TryHackMe Journey</h4><p>Started offensive security labs</p></div>
+        </div>
+        <div class="ab-tr">
+          <div class="ab-yr" style="color:var(--yellow)">Mar 2026</div>
+          <div class="ab-info"><h4 style="color:var(--yellow2)">Jr Pen Tester Certified ✦</h4><p>30h 40min · THM-XENZYDVUXP</p></div>
         </div>
       </div>
+    </div>
 
-      <div class="glass-card a2" data-aos="fade-up" data-aos-delay="100" style="background: rgba(12,12,12,0.8); color:white; border-color: rgba(255,255,255,0.1);">
-        <div class="card-label" style="color:rgba(255,255,255,0.5); font-weight:700; font-size:.7rem; margin-bottom:16px;">TryHackMe Platform</div>
-        <div style="font-size: 2rem; font-weight: 800; color:var(--yellow); line-height:1.1;">Top 4%<br>Global Rank</div>
-        <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="btn btn-yellow" style="margin-top:24px; font-size:.65rem; padding: 10px 20px;">
-          <i class="fas fa-external-link-alt"></i> View Profile
-        </a>
+    <!-- Photo — ONLY here -->
+    <div class="rv d2">
+      <div class="ab-photo">
+        <img src="ceo.jpg" alt="Nitin Raj"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ab-photo-fallback" style="display:none">
+          <i class="fas fa-user-secret"></i>
+          <span>Nitin Raj</span>
+        </div>
+        <div class="ab-photo-name">Nitin Raj · Jr Pentester</div>
       </div>
+    </div>
 
-      <div class="glass-card a3" data-aos="fade-up" data-aos-delay="150" style="background: rgba(245, 200, 66, 0.6);">
-        <div style="font-size:4.5rem;font-weight:800;letter-spacing:-3px;line-height:1; color: var(--black); text-shadow: 2px 2px 0px rgba(255,255,255,0.4);">50+</div>
-        <div style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-top:8px; color: var(--black);">Labs Done</div>
-      </div>
-
-      <div class="glass-card a4" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-label" style="font-size:.7rem;font-weight:700;opacity:0.6;margin-bottom:8px;">Education</div>
-        <div style="font-size:1.5rem;font-weight:800;margin-bottom:8px;line-height:1.2;">Galgotias University</div>
-        <p style="font-size:.9rem;opacity:.7;line-height:1.6;font-weight:600;">BCA · Cyber Security<br>Currently enrolled · Greater Noida</p>
-      </div>
-
-      <div class="glass-card a5" data-aos="fade-up" data-aos-delay="150">
-        <div class="card-label" style="font-size:.7rem;font-weight:700;opacity:0.6;margin-bottom:8px;">Latest Achievement</div>
-        <div style="font-size:1.5rem;font-weight:800;color:var(--ink);line-height:1.2;">Jr Pen Tester</div>
-        <p style="font-size:.85rem;opacity:.8;margin-top:8px;line-height:1.6;font-weight:600;">TryHackMe · 30H 40M</p>
+    <!-- Stats -->
+    <div class="rv d3">
+      <div class="ab-r">
+        <div class="ab-stat-row">
+          <div class="abs-n">TOP <em>4%</em></div>
+          <div class="abs-l">TryHackMe Global Rank</div>
+        </div>
+        <div class="ab-stat-row">
+          <div class="abs-n"><em>50+</em></div>
+          <div class="abs-l">Labs Completed</div>
+        </div>
+        <div class="ab-stat-row">
+          <div class="abs-n"><em>5</em></div>
+          <div class="abs-l">Certifications Earned</div>
+        </div>
+        <div class="ab-stat-row" style="padding-top:24px">
+          <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="btn btn-yellow btn-sm"><span><i class="fas fa-external-link-alt"></i> TryHackMe Profile</span></a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE 2 -->
-<div class="marquee-wrap reverse">
-  <div class="marquee-track">
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Nmap</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Burp Suite</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Metasploit</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Linux</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Wireshark</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Python</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">OWASP Top 10</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">John the Ripper</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Nmap</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Burp Suite</span><span class="m-item accent">·</span>
-    <span class="m-item" style="color:var(--muted);text-shadow:none;">Metasploit</span><span class="m-item accent">·</span>
-  </div>
-</div>
-
-<!-- ══════════ SKILLS (Claymorphism) ══════════ -->
-<section id="skills" class="section">
-  <div class="container">
-    <div class="section-tag" data-aos="fade-up">02 — Arsenal</div>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Technical <em>Skills</em></h2>
-
-    <div class="bento skills-bento">
-      <div class="clay-card clay-lav" data-aos="zoom-in" data-aos-delay="0">
-        <div class="card-num">01</div>
-        <div class="skill-name">Pentesting Fundamentals</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="60"></div></div>
-        <div class="skill-pct">60% Mastered</div>
-      </div>
-
-      <div class="clay-card clay-yellow" data-aos="zoom-in" data-aos-delay="80">
-        <div class="card-num">02</div>
-        <div class="skill-name">OWASP Top 10</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="70" style="background:var(--black);"></div></div>
-        <div class="skill-pct">70% Mastered</div>
-      </div>
-
-      <div class="clay-card clay-mint" data-aos="zoom-in" data-aos-delay="160">
-        <div class="card-num">03</div>
-        <div class="skill-name">Linux &amp; Terminal</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
-        <div class="skill-pct">75% Mastered</div>
-      </div>
-
-      <div class="clay-card clay-blue" data-aos="zoom-in" data-aos-delay="0">
-        <div class="card-num">04</div>
-        <div class="skill-name">Networking Basics</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="65"></div></div>
-        <div class="skill-pct">65% Mastered</div>
-      </div>
-
-      <div class="clay-card clay-cream" data-aos="zoom-in" data-aos-delay="80">
-        <div class="card-num">05</div>
-        <div class="skill-name">C &amp; Python Scripting</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="50"></div></div>
-        <div class="skill-pct">50% Mastered</div>
-      </div>
-
-      <div class="clay-card clay-coral" data-aos="zoom-in" data-aos-delay="160">
-        <div class="card-num">06</div>
-        <div class="skill-name">Metasploit &amp; Burp</div>
-        <div class="skill-bar"><div class="skill-fill" data-w="45"></div></div>
-        <div class="skill-pct">45% Mastered</div>
-      </div>
+<!-- ══════════ SKILLS ══════════ -->
+<section id="skills">
+  <div class="skills-inner">
+    <div class="sec-tag rv">02 — Arsenal</div>
+    <h2 class="sec-title rv d1">Technical <em>Skills</em></h2>
+    <div class="sk-list">
+      <div class="sk-row rv"><span class="sk-i">01</span><span class="sk-n">Pentesting Fundamentals</span><div class="sk-bar"><div class="sk-fill" data-w="60"></div></div><span class="sk-pct">60%</span></div>
+      <div class="sk-row rv d1"><span class="sk-i">02</span><span class="sk-n">OWASP Top 10</span><div class="sk-bar"><div class="sk-fill" data-w="70"></div></div><span class="sk-pct">70%</span></div>
+      <div class="sk-row rv d2"><span class="sk-i">03</span><span class="sk-n">Linux & Terminal</span><div class="sk-bar"><div class="sk-fill" data-w="75"></div></div><span class="sk-pct">75%</span></div>
+      <div class="sk-row rv d3"><span class="sk-i">04</span><span class="sk-n">Networking Basics</span><div class="sk-bar"><div class="sk-fill" data-w="65"></div></div><span class="sk-pct">65%</span></div>
+      <div class="sk-row rv d4"><span class="sk-i">05</span><span class="sk-n">C & Python Scripting</span><div class="sk-bar"><div class="sk-fill" data-w="50"></div></div><span class="sk-pct">50%</span></div>
+      <div class="sk-row rv d5"><span class="sk-i">06</span><span class="sk-n">Metasploit & Burp Suite</span><div class="sk-bar"><div class="sk-fill" data-w="45"></div></div><span class="sk-pct">45%</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ PROJECTS (Neo-Brutalism) ══════════ -->
-<section id="projects" class="section">
-  <div class="container">
-    <div class="section-tag" data-aos="fade-up">04 — Field Operations</div>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Practical <em>Experience</em></h2>
+<!-- ══════════ CERTIFICATIONS ══════════ -->
+<section id="certifications">
+  <div class="cert-inner">
+    <div class="sec-tag rv">03 — Credentials</div>
+    <h2 class="sec-title rv d1">Certifications & <em>Learning Paths</em></h2>
 
-    <div class="bento proj-bento">
-      <div class="neo-brutal proj-card" data-aos="fade-up" onclick="openModal('m1')" style="background: var(--lav2);">
-        <div>
-          <div class="proj-tags"><span class="proj-tag">OWASP</span><span class="proj-tag" style="background:var(--white);">XSS</span></div>
-          <div class="proj-title">Web Vulnerability<br>Analysis</div>
-          <p class="proj-desc">Hands-on OWASP Top 10 testing in sandboxed environments. Burp Suite interception, IDOR, injection flaws documented.</p>
-        </div>
-        <div class="proj-arrow-btn"><i class="fas fa-arrow-right"></i></div>
-      </div>
-
-      <div class="neo-brutal proj-card" data-aos="fade-up" data-aos-delay="80" onclick="openModal('m2')" style="background: var(--mint2);">
-        <div>
-          <div class="proj-tags"><span class="proj-tag">Linux</span><span class="proj-tag" style="background:var(--white);">PrivEsc</span></div>
-          <div class="proj-title">Linux CLI &amp;<br>Privilege Escalation</div>
-          <p class="proj-desc">Privilege escalation via SUID binaries, cron jobs, and kernel exploits in isolated lab environments.</p>
-        </div>
-        <div class="proj-arrow-btn"><i class="fas fa-arrow-right"></i></div>
-      </div>
-
-      <div class="neo-brutal proj-card" data-aos="fade-up" onclick="openModal('m3')" style="background: var(--cream);">
-        <div>
-          <div class="proj-tags"><span class="proj-tag">Nmap</span><span class="proj-tag" style="background:var(--white);">Wireshark</span></div>
-          <div class="proj-title">Reconnaissance &amp;<br>Enumeration</div>
-          <p class="proj-desc">Full surface mapping using Nmap, GoBuster, Burp Suite. Wireshark .pcap analysis for malicious signatures.</p>
-        </div>
-        <div class="proj-arrow-btn"><i class="fas fa-arrow-right"></i></div>
-      </div>
-
-      <div class="neo-brutal proj-card" data-aos="fade-up" data-aos-delay="80" onclick="openModal('m4')" style="background: var(--coral2);">
-        <div>
-          <div class="proj-tags"><span class="proj-tag">CTF</span><span class="proj-tag" style="background:var(--white);">Crypto</span></div>
-          <div class="proj-title">Cryptography<br>&amp; CTF</div>
-          <p class="proj-desc">Jeopardy-style CTF challenges. Steganography, hash cracking with John the Ripper, Caesar/Vigenere ciphers.</p>
-        </div>
-        <div class="proj-arrow-btn"><i class="fas fa-arrow-right"></i></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CERTIFICATIONS (Polymorphic combo) ══════════ -->
-<section id="certifications" class="section">
-  <div class="container">
-    <div class="section-tag" data-aos="fade-up">03 — Credentials</div>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Learning <em>Paths</em></h2>
-
-    <!-- Featured cert -->
-    <div class="cert-hero" data-aos="fade-up">
-      <div class="cert-hero-watermark">CERTIFIED</div>
+    <div class="cert-hero rv-s">
+      <div class="cert-wm">Certified.</div>
       <div>
-        <span class="cert-new-tag">✦ Latest Achievement — 8th March 2026</span>
-        <h2 class="cert-hero-title">Jr Penetration<br><em>Tester</em></h2>
-        <p class="cert-hero-sub">TryHackMe Learning Path · Certificate ID: THM-XENZYDVUXP</p>
-        <ul class="cert-bullets">
-          <li>Pentesting methodologies and tactics</li>
-          <li>Enumeration, exploitation and reporting</li>
+        <span class="cf-new">✦ Latest — 8 March 2026</span>
+        <h2 class="cf-t">Jr Penetration<br><em>Tester</em></h2>
+        <p class="cf-sub">TryHackMe · THM-XENZYDVUXP · 30h 40min</p>
+        <ul class="cf-ul">
+          <li>Pentesting methodologies & tactics</li>
+          <li>Enumeration, exploitation & reporting</li>
           <li>Realistic hands-on hacking exercises</li>
+          <li>Industry-standard security tools</li>
         </ul>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <a href="#" class="btn btn-yellow"><i class="fas fa-eye"></i> View Cert</a>
-          <a href="#" class="btn btn-outline" style="border-color: rgba(255,255,255,0.2); color:white;"><i class="fas fa-check-circle"></i> Verify</a>
+        <div class="cf-actions">
+          <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-XENZYDVUXP.pdf" target="_blank" class="btn btn-yellow"><span><i class="fas fa-eye"></i> View Certificate</span></a>
+          <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-XENZYDVUXP.pdf" download class="btn btn-out-w"><span><i class="fas fa-download"></i> Download</span></a>
+          <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="btn btn-out-w"><span><i class="fas fa-check-circle"></i> Verify</span></a>
         </div>
       </div>
-      <div class="cert-badge-box">
-        <div style="font-size: 3rem; color: var(--yellow); filter: drop-shadow(0 0 10px rgba(245,200,66,0.5));"><i class="fas fa-user-secret"></i></div>
-        <div class="cert-dur">30H</div>
-        <div style="font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.6;">Duration</div>
+      <div class="cf-badge">
+        <i class="fas fa-user-secret"></i>
+        <div class="cf-dur">30H</div>
+        <div class="cf-durl">40 Min</div>
+        <div class="cf-id">THM-XENZYDVUXP</div>
+      </div>
+    </div>
+
+    <div class="cert-grid">
+      <div class="cc cc-y rv"><div class="cc-num">01</div><div class="cc-t">Advent of Cyber 2025</div><p class="cc-b">TryHackMe · 24 real-world challenges · Offensive & Defensive</p><div class="cc-foot"><a href="THM-JWWBKSW4P9.pdf" target="_blank" class="btn btn-dark btn-sm"><span><i class="fas fa-eye"></i> View</span></a><a href="THM-JWWBKSW4P9.pdf" download class="btn btn-out btn-sm"><span><i class="fas fa-download"></i></span></a></div></div>
+      <div class="cc cc-lv rv d1"><div class="cc-num">02</div><div class="cc-t">Cyber Security 101</div><p class="cc-b">TryHackMe · Offensive/defensive security · Networking fundamentals</p><div class="cc-foot"><a href="THM-GRLXWHV1PQ.pdf" target="_blank" class="btn btn-dark btn-sm"><span><i class="fas fa-eye"></i> View</span></a><a href="THM-GRLXWHV1PQ.pdf" download class="btn btn-out btn-sm"><span><i class="fas fa-download"></i></span></a></div></div>
+      <div class="cc cc-mt rv d2"><div class="cc-num">03</div><div class="cc-t">Pre Security</div><p class="cc-b">TryHackMe · Network basics · Web weaknesses · Attack vectors</p><div class="cc-foot"><a href="THM-KKEKXWBHP1.pdf" target="_blank" class="btn btn-dark btn-sm"><span><i class="fas fa-eye"></i> View</span></a><a href="THM-KKEKXWBHP1.pdf" download class="btn btn-out btn-sm"><span><i class="fas fa-download"></i></span></a></div></div>
+      <div class="cc cc-dk rv d3"><div class="cc-num">04</div><div class="cc-t">C Programming</div><p class="cc-b">Scaler · Memory management · Logic building · Low-level concepts</p><div class="cc-foot"><a href="https://moonshot.scaler.com/s/li/G6hCGA5ABO" target="_blank" class="btn btn-yellow btn-sm" style="width:100%;justify-content:center"><span><i class="fas fa-external-link-alt"></i> Verify</span></a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects">
+  <div class="proj-inner">
+    <div class="sec-tag rv">04 — Field Operations</div>
+    <h2 class="sec-title rv d1">Practical <em>Experience</em></h2>
+    <div class="proj-grid">
+      <div class="pc pc-dark dark rv" data-num="01" onclick="openM('m1')">
+        <div><div class="pc-num">01</div><div class="pc-tags"><span class="pc-tag" style="color:var(--yellow2)">OWASP</span><span class="pc-tag">XSS</span><span class="pc-tag">SQLi</span></div><div class="pc-t" style="color:#fff">Web Vulnerability Analysis</div><p class="pc-d" style="color:rgba(255,255,255,.5)">Hands-on OWASP Top 10 in sandboxed environments. Burp Suite, IDOR, injection flaws.</p></div>
+        <div class="pc-arrow" style="color:#fff"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="pc pc-yellow rv d1" data-num="02" onclick="openM('m2')">
+        <div><div class="pc-num">02</div><div class="pc-tags"><span class="pc-tag">Linux</span><span class="pc-tag">PrivEsc</span><span class="pc-tag">SUID</span></div><div class="pc-t">Linux CLI & Privilege Escalation</div><p class="pc-d">SUID binaries, cron jobs, kernel exploits in isolated lab environments.</p></div>
+        <div class="pc-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="pc pc-blue rv d2" data-num="03" onclick="openM('m3')">
+        <div><div class="pc-num">03</div><div class="pc-tags"><span class="pc-tag">Nmap</span><span class="pc-tag">Wireshark</span><span class="pc-tag">GoBuster</span></div><div class="pc-t">Reconnaissance & Enumeration</div><p class="pc-d">Surface mapping via Nmap, GoBuster, Burp. Wireshark .pcap analysis.</p></div>
+        <div class="pc-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="pc pc-peach rv d3" data-num="04" onclick="openM('m4')">
+        <div><div class="pc-num">04</div><div class="pc-tags"><span class="pc-tag">CTF</span><span class="pc-tag">Steganography</span><span class="pc-tag">Hashing</span></div><div class="pc-t">Cryptography & CTF</div><p class="pc-d">CTF challenges, hash cracking with John the Ripper, classical ciphers.</p></div>
+        <div class="pc-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ CONTACT (Polymorphic Skeuo) ══════════ -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="section-tag" data-aos="fade-up">05 — Uplink</div>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Get In <em>Touch</em></h2>
-
-    <div class="bento contact-bento" data-aos="fade-up" data-aos-delay="100">
-      <div class="ct-main">
-        <div>
-          <h2 class="ct-title">Let's<br>Connect.</h2>
-          <p class="ct-sub">Ready to discuss entry-level SOC or Penetration Testing opportunities. Open to internships &amp; freelance work.</p>
-        </div>
-        <div style="display: flex; flex-direction: column;">
-          <a href="https://wa.me/917277839446" target="_blank" class="ct-link">
-            <span>WhatsApp</span><span>+91 72778 39446</span>
-          </a>
-          <a href="mailto:nitinraj3884@gmail.com" class="ct-link">
-            <span>Email</span><span>nitinraj3884@gmail.com</span>
-          </a>
-          <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank" class="ct-link">
-            <span>LinkedIn</span><span>Nitin Raj</span>
-          </a>
-        </div>
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="ct-inner">
+    <div class="rv">
+      <div class="sec-tag">05 — Uplink</div>
+      <h2 class="ct-t">Let's<br>Work<br><span class="italic-line">Together.</span></h2>
+      <p class="ct-desc">Open to SOC analyst and penetration testing internships. Let's build something together.</p>
+      <div class="ct-links">
+        <a href="https://wa.me/917277839446" target="_blank" class="ct-link"><span class="ct-ll">WhatsApp</span><span class="ct-lv">+91 72778 39446</span><i class="fas fa-arrow-up-right ct-li"></i></a>
+        <a href="mailto:nitinraj3884@gmail.com" class="ct-link"><span class="ct-ll">Email</span><span class="ct-lv">nitinraj3884@gmail.com</span><i class="fas fa-arrow-up-right ct-li"></i></a>
+        <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank" class="ct-link"><span class="ct-ll">LinkedIn</span><span class="ct-lv">Nitin Raj</span><i class="fas fa-arrow-up-right ct-li"></i></a>
+        <a href="https://github.com/nitinraj007" target="_blank" class="ct-link"><span class="ct-ll">GitHub</span><span class="ct-lv">nitinraj007</span><i class="fas fa-arrow-up-right ct-li"></i></a>
+        <a href="https://tryhackme.com/p/nitinraj3884" target="_blank" class="ct-link"><span class="ct-ll">TryHackMe</span><span class="ct-lv">Top 4% · nitinraj3884</span><i class="fas fa-arrow-up-right ct-li"></i></a>
       </div>
-
-      <div class="ct-form-card">
-        <div class="form-title">Quick Message</div>
-        <form onsubmit="handleForm(event)">
-          <div class="ff"><label>Your Name</label><input type="text" placeholder="John Doe" required></div>
+    </div>
+    <div class="rv d2">
+      <div class="ct-form-wrap">
+        <div class="ct-form-title">Quick Message</div>
+        <form onsubmit="hForm(event)">
+          <div class="ff"><label>Name</label><input type="text" placeholder="John Doe" required></div>
           <div class="ff"><label>Email</label><input type="email" placeholder="john@company.com" required></div>
-          <div class="ff"><label>Message</label><textarea placeholder="Tell me about the opportunity..."></textarea></div>
-          <div style="margin-top: 32px;">
-            <button type="submit" class="btn btn-dark">Send Message <i class="fas fa-arrow-right"></i></button>
-          </div>
+          <div class="ff"><label>Subject</label><input type="text" placeholder="Internship Opportunity"></div>
+          <div class="ff"><label>Message</label><textarea placeholder="Tell me about the role..."></textarea></div>
+          <div class="fsub"><button type="submit" class="btn btn-dark"><span>Send Message <i class="fas fa-arrow-right"></i></span></button></div>
         </form>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<div class="container">
-  <div class="footer">
-    <div class="f-logo">Nitin<em>Raj</em> ·</div>
-    <div class="f-copy">© 2026 · Jr Pen Tester Certified</div>
-    <div class="f-links">
-      <a href="https://github.com/nitinraj007" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank">LinkedIn</a>
+<!-- Bottom marquee -->
+<div class="sep-mq">
+  <div class="mq rv">
+    <div class="mq-t">
+      <span class="mi" style="color:#C4BFBA">✦ Nitin Raj</span>
+      <span class="mi" style="color:var(--yellow)">✦ Jr Penetration Tester</span>
+      <span class="mi" style="color:#C4BFBA">✦ Top 4% TryHackMe</span>
+      <span class="mi" style="color:var(--yellow)">✦ System Secure</span>
+      <span class="mi" style="color:#C4BFBA">✦ Galgotias University</span>
+      <span class="mi" style="color:var(--yellow)">✦ Offensive Security</span>
+      <span class="mi" style="color:#C4BFBA">✦ Nitin Raj</span>
+      <span class="mi" style="color:var(--yellow)">✦ Jr Penetration Tester</span>
+      <span class="mi" style="color:#C4BFBA">✦ Top 4% TryHackMe</span>
+      <span class="mi" style="color:var(--yellow)">✦ System Secure</span>
+      <span class="mi" style="color:#C4BFBA">✦ Galgotias University</span>
+      <span class="mi" style="color:var(--yellow)">✦ Offensive Security</span>
     </div>
   </div>
 </div>
 
-<!-- MODALS -->
-<div class="overlay" id="overlay" onclick="if(event.target===this)closeModals()">
-  <div class="modal" id="m1">
-    <div class="modal-head"><h3>Web Vulnerability Analysis</h3><button class="modal-close" onclick="closeModals()"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p><strong>Focus: OWASP Top 10</strong><br><br>Performed manual testing on OWASP Juice Shop. Identified and documented Injection flaws, Broken Access Control (IDOR), and XSS vulnerabilities. Used Burp Suite Community Edition for request interception and manipulation.</p></div>
-  </div>
-  <div class="modal" id="m2">
-    <div class="modal-head"><h3>Linux CLI &amp; PrivEsc</h3><button class="modal-close" onclick="closeModals()"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p><strong>Focus: System Hardening &amp; Exploitation</strong><br><br>Completed the Linux Fundamentals path on TryHackMe. Practiced privilege escalation via misconfigured SUID binaries, kernel exploits, and weak file permissions in isolated lab environments.</p></div>
-  </div>
-  <div class="modal" id="m3">
-    <div class="modal-head"><h3>Reconnaissance &amp; Enumeration</h3><button class="modal-close" onclick="closeModals()"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p><strong>Focus: Information Gathering</strong><br><br>Utilized Nmap for port scanning and service version detection. Analyzed network traffic patterns using Wireshark .pcap files to identify malicious signatures and anomalous behaviour.</p></div>
-  </div>
-  <div class="modal" id="m4">
-    <div class="modal-head"><h3>Cryptography &amp; CTF</h3><button class="modal-close" onclick="closeModals()"><i class="fas fa-times"></i></button></div>
-    <div class="modal-body"><p><strong>Focus: Data Obfuscation</strong><br><br>Solved Jeopardy-style CTF challenges involving Steganography (hidden data in images) and hash cracking using John the Ripper with basic dictionary attacks. Worked with classical ciphers — Caesar and Vigenere.</p></div>
+<!-- Footer -->
+<div class="footer">
+  <div class="f-logo">Nitin<em>Raj</em> ·</div>
+  <div class="f-copy">© 2026 · Jr Pen Tester Certified · Galgotias University</div>
+  <div class="f-soc">
+    <a href="https://github.com/nitinraj007" target="_blank">GitHub</a>
+    <a href="https://www.instagram.com/nitin.007_/" target="_blank">IG</a>
+    <a href="https://x.com/NitinRaj24693" target="_blank">TW</a>
+    <a href="https://www.linkedin.com/in/nitin-raj-451ba5314" target="_blank">LI</a>
+    <a href="https://www.youtube.com/@TrendHiveAcademy" target="_blank">YT</a>
   </div>
 </div>
 
-<!-- AOS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<!-- Modals -->
+<div class="ov" id="ov" onclick="if(event.target===this)closeM()">
+  <div class="modal" id="m1"><div class="mhd"><h3>Web Vulnerability Analysis</h3><button class="mx" onclick="closeM()"><i class="fas fa-times"></i></button></div><div class="mbd"><p><strong>Focus: OWASP Top 10</strong><br><br>Manual testing on OWASP Juice Shop. Identified Injection flaws, IDOR, XSS. Burp Suite Community for request interception.</p></div></div>
+  <div class="modal" id="m2"><div class="mhd"><h3>Linux CLI & PrivEsc</h3><button class="mx" onclick="closeM()"><i class="fas fa-times"></i></button></div><div class="mbd"><p><strong>Focus: System Exploitation</strong><br><br>TryHackMe Linux Fundamentals path. Privilege escalation via SUID binaries, kernel exploits, and weak file permissions.</p></div></div>
+  <div class="modal" id="m3"><div class="mhd"><h3>Reconnaissance</h3><button class="mx" onclick="closeM()"><i class="fas fa-times"></i></button></div><div class="mbd"><p><strong>Focus: Information Gathering</strong><br><br>Nmap port scanning and service detection. Wireshark .pcap analysis to identify malicious signatures and anomalies.</p></div></div>
+  <div class="modal" id="m4"><div class="mhd"><h3>Cryptography & CTF</h3><button class="mx" onclick="closeM()"><i class="fas fa-times"></i></button></div><div class="mbd"><p><strong>Focus: Data Obfuscation</strong><br><br>Jeopardy-style CTF challenges. Steganography, John the Ripper hash cracking, Caesar and Vigenere ciphers.</p></div></div>
+</div>
 
 <script>
-/* ──────────────────────────────────────
-   AOS INIT
-────────────────────────────────────── */
-AOS.init({ duration: 800, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', once: true, offset: 60 });
+/* ── LOADER ── */
+window.addEventListener('load', () => setTimeout(() => document.getElementById('ldr').classList.add('out'), 1700));
 
-/* ──────────────────────────────────────
-   CURSOR
-────────────────────────────────────── */
-const cur = document.getElementById('cursor');
-let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-let ox = cx, oy = cy;
-
-document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
-
-(function animCur() {
-  ox += (cx - ox) * 0.15;
-  oy += (cy - oy) * 0.15;
-  cur.style.left = ox + 'px';
-  cur.style.top  = oy + 'px';
-  requestAnimationFrame(animCur);
-})();
-
-document.querySelectorAll('a, button, .proj-card, .clay-card, .glass-card, .ct-link, .neu-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
-});
-
-/* ──────────────────────────────────────
-   PARTICLES CANVAS
-────────────────────────────────────── */
-(function() {
-  const canvas = document.getElementById('particles-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = () => canvas.width  = window.innerWidth;
-  const H = () => canvas.height = window.innerHeight;
-  W(); H();
-  window.addEventListener('resize', () => { W(); H(); });
-
-  const count = 40;
-  const particles = Array.from({ length: count }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + 1,
-    dx: (Math.random() - .5) * .5,
-    dy: (Math.random() - .5) * .5,
-    o: Math.random() * .4 + .1,
-  }));
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(12,12,12,${p.o})`;
-      ctx.fill();
-      p.x += p.dx; p.y += p.dy;
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
-    });
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 150) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(12,12,12,${.06 * (1 - dist/150)})`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* ──────────────────────────────────────
-   SCROLL & PARALLAX
-────────────────────────────────────── */
-const nav = document.getElementById('nav');
-const parallaxElements = document.querySelectorAll('.parallax');
-
+/* ── SCROLL PROGRESS ── */
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY;
-  nav.classList.toggle('scrolled', scrolled > 60);
-
-  // Parallax logic
-  parallaxElements.forEach(el => {
-    const speed = el.dataset.speed || 0.2;
-    el.style.transform = `translateY(${scrolled * speed}px)`;
-  });
+  const p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progress').style.width = p + '%';
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
 });
 
-/* SMOOTH SCROLL */
+/* ── CURSOR ── */
+const dot = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+document.addEventListener('mousedown', () => ring.classList.add('click'));
+document.addEventListener('mouseup',   () => ring.classList.remove('click'));
+(function cur() {
+  rx += (mx - rx) * .1; ry += (my - ry) * .1;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(cur);
+})();
+document.querySelectorAll('a, button, .pc, .cc, .hero-stat-card, .ct-link, .sk-row, .ab-stat-row, .ab-photo').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hov'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hov'));
+});
+
+/* ── NAV ── */
+const mbBtn = document.getElementById('mbBtn');
+const drawer = document.getElementById('drawer');
+const drawerX = document.getElementById('drawerX');
+mbBtn.addEventListener('click', () => { drawer.classList.add('open'); mbBtn.innerHTML='<i class="fas fa-times"></i>'; });
+drawerX.addEventListener('click', () => { drawer.classList.remove('open'); mbBtn.innerHTML='<i class="fas fa-bars"></i>'; });
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { drawer.classList.remove('open'); mbBtn.innerHTML='<i class="fas fa-bars"></i>'; }));
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('on');
+    // Animate skill bars
+    e.target.querySelectorAll('.sk-fill').forEach(f => f.style.width = (f.dataset.w||0) + '%');
+    if (e.target.classList.contains('sk-row')) {
+      const f = e.target.querySelector('.sk-fill');
+      if (f) f.style.width = (f.dataset.w||0) + '%';
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv, .rv-l, .rv-s, .sk-row').forEach(el => obs.observe(el));
+
+/* ── SMOOTH SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
-    if (!t) return;
-    e.preventDefault();
-    window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    if (!t) return; e.preventDefault();
+    window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
   });
 });
 
-/* ──────────────────────────────────────
-   SKILL BARS
-────────────────────────────────────── */
-const barObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.skill-fill').forEach(f => {
-        f.style.width = (f.dataset.w || 0) + '%';
-      });
-    }
+/* ── CARD 3D TILT ── */
+document.querySelectorAll('.hero-stat-card, .cc, .pc, .cert-hero').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width  - 0.5) * 6;
+    const y = ((e.clientY - r.top)  / r.height - 0.5) * -6;
+    card.style.transform = `perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-4px)`;
   });
-}, { threshold: 0.3 });
-document.querySelectorAll('.clay-card').forEach(el => barObs.observe(el));
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
 
-/* ──────────────────────────────────────
-   MODALS
-────────────────────────────────────── */
-function openModal(id) {
-  document.querySelectorAll('.modal').forEach(m => {
-    m.style.display = 'none'; m.style.opacity = '0';
-  });
-  const modal = document.getElementById(id);
-  modal.style.display = 'block';
-  setTimeout(() => modal.style.opacity = '1', 10);
-  document.getElementById('overlay').classList.add('on');
+/* ── COUNTER ANIMATION ── */
+function animateCount(el) {
+  const target = parseFloat(el.dataset.target);
+  const isFloat = el.dataset.float === 'true';
+  let start = 0; const dur = 1200; const step = 20;
+  const increment = target / (dur / step);
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = isFloat ? start.toFixed(1) : Math.floor(start);
+  }, step);
 }
-function closeModals() { document.getElementById('overlay').classList.remove('on'); }
-window.openModal  = openModal;
-window.closeModals = closeModals;
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); countObs.unobserve(e.target); } });
+});
+document.querySelectorAll('[data-target]').forEach(el => countObs.observe(el));
 
-/* ──────────────────────────────────────
-   CONTACT FORM
-────────────────────────────────────── */
-function handleForm(e) {
+/* ── MODALS ── */
+function openM(id) {
+  document.querySelectorAll('.modal').forEach(m => { m.style.display = 'none'; m.style.opacity = '0'; });
+  const m = document.getElementById(id);
+  m.style.display = 'block'; setTimeout(() => m.style.opacity = '1', 10);
+  document.getElementById('ov').classList.add('on');
+}
+function closeM() { document.getElementById('ov').classList.remove('on'); }
+window.openM = openM; window.closeM = closeM;
+
+/* ── FORM ── */
+function hForm(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.innerHTML = 'Message Sent ✦';
-  btn.style.background = '#22C55E';
-  setTimeout(() => {
-    btn.innerHTML = 'Send Message <i class="fas fa-arrow-right"></i>';
-    btn.style.background = '';
-    e.target.reset();
-  }, 3000);
+  const b = e.target.querySelector('button[type="submit"]');
+  b.querySelector('span').innerHTML = 'Sent ✦';
+  b.style.background = '#22C55E'; b.disabled = true;
+  setTimeout(() => { b.querySelector('span').innerHTML = 'Send Message <i class="fas fa-arrow-right"></i>'; b.style.background = ''; b.disabled = false; e.target.reset(); }, 3000);
 }
-window.handleForm = handleForm;
+window.hForm = hForm;
 </script>
 </body>
 </html>
